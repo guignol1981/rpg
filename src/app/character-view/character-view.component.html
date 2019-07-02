@@ -1,0 +1,65 @@
+<div class="container p-5 d-flex justify-content-between">
+    <div>
+        <div class="card"
+             style="width: 18rem;">
+            <img [src]="getCharacterImgSrc(battle.characters[0])"
+                 class="card-img-top flipX character-img"
+                 alt="character img">
+            <div class="card-body">
+                <h5 class="card-title">{{battle.characters[0].name}}</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <p>
+                            <ngb-progressbar type="success"
+                                             [value]="getCharacterPvProgress(battle.characters[0])"></ngb-progressbar>
+                        </p>
+                    </li>
+                    <li class="list-group-item">Classe: {{battle.characters[0].classe}}</li>
+                    <li class="list-group-item">Status: {{battle.characters[0].status}}</li>
+                    <li class="list-group-item">
+                        <p>
+                            <ngb-progressbar type="info"
+                                             [value]="battle.characters[0].abt"></ngb-progressbar>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-1">
+            <button class="btn btn-primary"
+                    (click)="setNextAction(characterActionTypes.Attack, battle.characters[0], battle.characters[1])">Attack</button>
+            <button class="btn btn-primary"
+                    (click)="battle.doDefend(battle.characters[0])">Defend</button>
+        </div>
+    </div>
+    <div>
+        {{battle.time}}
+    </div>
+    <div>
+        <div class="card"
+             style="width: 18rem;">
+            <img [src]="getCharacterImgSrc(battle.characters[1])"
+                 class="card-img-top  character-img"
+                 alt="character img">
+            <div class="card-body">
+                <h5 class="card-title">{{battle.characters[1].name}}</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <p>
+                            <ngb-progressbar type="success"
+                                             [value]="getCharacterPvProgress(battle.characters[1])"></ngb-progressbar>
+                        </p>
+                    </li>
+                    <li class="list-group-item">Classe: {{battle.characters[1].classe}}</li>
+                    <li class="list-group-item">Status: {{battle.characters[1].status}}</li>
+                    <li class="list-group-item">
+                        <p>
+                            <ngb-progressbar type="info"
+                                             [value]="battle.characters[1].abt"></ngb-progressbar>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
