@@ -21,7 +21,7 @@ export default class Eye extends Character implements NPC {
                 this.executeActionObservable.next({
                     type: CharacterActionTypes.Attack,
                     source: this,
-                    target: this.targets[0]
+                    target: this.targets[Math.floor(Math.random() * this.targets.length)]
                 });
             }
         }, 1000);

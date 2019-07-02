@@ -5,6 +5,7 @@ import { CharacterActionTypes } from 'src/models/charcter-action';
 import Eye from 'src/models/eye';
 import WhiteMage from 'src/models/white-mage';
 import { ImpletementNPC } from 'src/utils/interface-helper';
+import Fighter from 'src/models/fighter';
 
 @Component({
     selector: 'app-character-view',
@@ -15,6 +16,7 @@ export class CharacterViewComponent implements OnInit {
     public battle: Battle = new Battle(
         [
             new WhiteMage(1, 'Dummy 1'),
+            new Fighter(1, 'Dummy 2')
         ],
         [
             new Eye(2, 'Npc 1'),

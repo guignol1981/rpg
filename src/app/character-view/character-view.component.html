@@ -1,25 +1,25 @@
 <div class="container p-5 d-flex justify-content-between">
-    <div>
+    <div *ngFor="let character of battle.teamA">
         <div class="card"
              style="width: 18rem;">
-            <img [src]="getCharacterImgSrc(battle.teamA[0])"
+            <img [src]="getCharacterImgSrc(character)"
                  class="card-img-top flipX character-img"
                  alt="character img">
             <div class="card-body">
-                <h5 class="card-title">{{battle.teamA[0].name}}</h5>
+                <h5 class="card-title">{{character.name}}</h5>
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p>
                             <ngb-progressbar type="success"
-                                             [value]="getCharacterPvProgress(battle.teamA[0])"></ngb-progressbar>
+                                             [value]="getCharacterPvProgress(character)"></ngb-progressbar>
                         </p>
                     </li>
-                    <li class="list-group-item">Classe: {{battle.teamA[0].classe}}</li>
-                    <li class="list-group-item">Status: {{battle.teamA[0].status}}</li>
+                    <li class="list-group-item">Classe: {{character.classe}}</li>
+                    <li class="list-group-item">Status: {{character.status}}</li>
                     <li class="list-group-item">
                         <p>
                             <ngb-progressbar type="info"
-                                             [value]="battle.teamA[0].abt"></ngb-progressbar>
+                                             [value]="character.abt"></ngb-progressbar>
                         </p>
                     </li>
                 </ul>
@@ -27,9 +27,9 @@
         </div>
         <div class="mt-1">
             <button class="btn btn-primary"
-                    (click)="setNextAction(characterActionTypes.Attack, battle.teamA[0], battle.teamB[0])">Attack</button>
+                    (click)="setNextAction(characterActionTypes.Attack, character, battle.teamB[0])">Attack</button>
             <button class="btn btn-primary"
-                    (click)="battle.doDefend(battle.teamA[0])">Defend</button>
+                    (click)="battle.doDefend(character)">Defend</button>
         </div>
     </div>
     <div>

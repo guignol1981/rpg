@@ -34,6 +34,7 @@ export default class Battle {
 
             if (ImpletementNPC(c)) {
                 (c as unknown as NPC).targets = this.teamA;
+                (c as unknown as NPC).allies = this.teamB;
             }
 
             c.startAbt();
