@@ -1,5 +1,6 @@
 import Character from './character';
 
-export default interface Enemy {
+export default interface NPC {
     targets: Character[];
+    allies: Character[];
 }

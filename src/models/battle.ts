@@ -1,12 +1,24 @@
+import { CharacterStatuses } from 'src/models/character';
 import Character from './character';
 import { CharacterActionTypes } from './charcter-action';
-import Enemy from './enemy';
+import NPC from './npc';
+import { ImpletementNPC } from 'src/utils/interface-helper';
 
 export default class Battle {
     public time = 0;
 
-    constructor(public characters: Character[]) {
-        this.characters.forEach(c => {
+    constructor(
+        public teamA: Character[],
+        public teamB: Character[]
+        ) {
+        this.initTeam(teamA);
+        this.initTeam(teamB);
+
+        this.startTimer();
+    }
+
+    initTeam(team: Character[]): void {
+        team.forEach(c => {
             c.executeActionObservable.subscribe(action => {
                 if (action.type === CharacterActionTypes.None) {
                     action.source.resetAbt();
@@ -20,25 +32,33 @@ export default class Battle {
                 action.source.resetAbt();
             });
 
-            if ('targets' in c) {
-                (c as Enemy).targets = this.characters.filter(character => characters !== c);
+            if (ImpletementNPC(c)) {
+                (c as unknown as NPC).targets = this.teamA;
             }
 
             c.startAbt();
         });
+    }
 
-        this.startTimer();
+    startTimer(): void {
+        setInterval(() => this.time++, 1000);
     }
 
     doAttack(source: Character, target: Character): void {
+        if (target.status === CharacterStatuses.Defending) {
+            target.pv -= 1;
+        } else {
+            target.pv -= 2;
+        }
+
+        if (target.pv <= 0) {
+            target.status = CharacterStatuses.Dead;
+        }
+
         source.attack(target);
     }
 
     doDefend(source: Character): void {
         source.defend();
-    }
-
-    startTimer(): void {
-        setInterval(() => this.time++, 1000);
     }
 }

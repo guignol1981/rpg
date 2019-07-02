@@ -1,15 +1,16 @@
 import Character, { CharacterClasses } from './character';
 import { CharacterActionTypes } from './charcter-action';
-import Enemy from './enemy';
+import NPC from './npc';
 
-export default class Eye extends Character implements Enemy {
+export default class Eye extends Character implements NPC {
     public targets: Character[] = [];
+    public allies: Character[] = [];
 
     constructor(
         public id: number,
         public name: string
     ) {
-        super(id, name, CharacterClasses.Enemy);
+        super(id, name, CharacterClasses.Fighter);
     }
 
     public startAbt(): void {

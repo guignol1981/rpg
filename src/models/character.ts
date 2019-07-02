@@ -3,8 +3,7 @@ import CharacterAction, { CharacterActionTypes } from './charcter-action';
 
 export enum CharacterClasses {
     Fighter = 'fighter',
-    WhiteMage = 'white-mage',
-    Enemy = 'Enemy'
+    WhiteMage = 'white-mage'
 }
 
 export enum CharacterStatuses {
@@ -51,19 +50,13 @@ export default abstract class Character {
         this.nextAction = { type: CharacterActionTypes.None, source: this };
     }
 
-    public attack(target: Character): void {
-        if (target.status === CharacterStatuses.Defending) {
-            target.pv -= 1;
-        } else {
-            target.pv -= 2;
-        }
-
-        if (target.pv <= 0) {
-            target.status = CharacterStatuses.Dead;
-        }
-    }
+    public attack(target: Character): void { }
 
     public defend(): void {
         this.status = CharacterStatuses.Defending;
+    }
+
+    public die(): void {
+        this.status = CharacterStatuses.Dead;
     }
 }

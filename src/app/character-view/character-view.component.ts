@@ -4,6 +4,7 @@ import Character, { CharacterClasses, CharacterStatuses } from 'src/models/chara
 import { CharacterActionTypes } from 'src/models/charcter-action';
 import Eye from 'src/models/eye';
 import WhiteMage from 'src/models/white-mage';
+import { ImpletementNPC } from 'src/utils/interface-helper';
 
 @Component({
     selector: 'app-character-view',
@@ -11,10 +12,15 @@ import WhiteMage from 'src/models/white-mage';
     styleUrls: ['./character-view.component.scss']
 })
 export class CharacterViewComponent implements OnInit {
-    public battle: Battle = new Battle([
-        new WhiteMage(1, 'Dummy 1'),
-        new Eye(2, 'Dummy 2')
-    ]);
+    public battle: Battle = new Battle(
+        [
+            new WhiteMage(1, 'Dummy 1'),
+        ],
+        [
+            new Eye(2, 'Npc 1'),
+            new Eye(2, 'Npc 2')
+        ]
+    );
     public characterActionTypes = CharacterActionTypes;
 
     constructor() {
@@ -39,7 +45,9 @@ export class CharacterViewComponent implements OnInit {
     getCharacterImgSrc(source: Character): string {
         switch (source.classe) {
             case CharacterClasses.Fighter:
-                if (source.status === CharacterStatuses.Dead) {
+                if (ImpletementNPC(source)) {
+                    return 'assets/Eye.gif';
+                } else if (source.status === CharacterStatuses.Dead) {
                     return 'assets/Fighter-Dead.gif';
                 } else {
                     return 'assets/Fighter.gif';
@@ -50,8 +58,6 @@ export class CharacterViewComponent implements OnInit {
                 } else {
                     return 'assets/WhiteMage.gif';
                 }
-            case CharacterClasses.Enemy:
-                return 'assets/Eye.gif';
         }
     }
 }
