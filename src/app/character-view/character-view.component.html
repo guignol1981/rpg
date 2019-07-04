@@ -1,47 +1,42 @@
 <div class="container p-5 d-flex justify-content-between">
-    <div *ngFor="let character of battle.teamA">
-        <div class="card"
-             style="width: 18rem;">
-            <img [src]="getCharacterImgSrc(character)"
-                 class="card-img-top flipX character-img"
-                 alt="character img">
-            <div class="card-body">
-                <h5 class="card-title">{{character.name}}</h5>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <p>
-                            <ngb-progressbar type="success"
-                                             [value]="getCharacterPvProgress(character)"></ngb-progressbar>
-                        </p>
-                    </li>
-                    <li class="list-group-item">Classe: {{character.classe}}</li>
-                    <li class="list-group-item">Status: {{character.status}}</li>
-                    <li class="list-group-item">
-                        <p>
-                            <ngb-progressbar type="info"
-                                             [value]="character.abt"></ngb-progressbar>
-                        </p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="mt-1">
-            <button class="btn btn-primary"
-                    (click)="setNextAction(characterActionTypes.Attack, character, battle.teamB[0])">Attack</button>
-            <button class="btn btn-primary"
-                    (click)="battle.doDefend(character)">Defend</button>
-        </div>
-    </div>
+    <ul class="list-group">
+        <li *ngFor="let character of battle.teamA" 
+            class="list-group-item">
+            <h5 class="card-title">{{character.name}}</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p>
+                        <ngb-progressbar type="success"
+                                         [value]="getCharacterPvProgress(character)"></ngb-progressbar>
+                    </p>
+                </li>
+                <li class="list-group-item">Classe: {{character.classe}}</li>
+                <li class="list-group-item">Status: {{character.status}}</li>
+                <li class="list-group-item">
+                    <p>
+                        <ngb-progressbar type="info"
+                                         [value]="character.abt"></ngb-progressbar>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                        <button class="btn btn-primary"
+                        (click)="setNextAction(characterActionTypes.Attack, character, battle.teamB[0])">Attack</button>
+                <button class="btn btn-primary"
+                        (click)="battle.doDefend(character)">Defend</button>
+                </li>
+            </ul>
+        </li>
+    </ul>
     <div>
-        {{battle.time}}
+        <h5>{{battle.time}}</h5>
+        <ul class="list-group">
+            <li *ngFor="let log of battle.battleLog">{{log}}</li>
+        </ul>
     </div>
     <div>
         <div *ngFor="let character of battle.teamB"
          class="card"
              style="width: 18rem;">
-            <img [src]="getCharacterImgSrc(character)"
-                 class="card-img-top  character-img"
-                 alt="character img">
             <div class="card-body">
                 <h5 class="card-title">{{character.name}}</h5>
                 <ul class="list-group">

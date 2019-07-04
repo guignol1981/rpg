@@ -6,6 +6,7 @@ import { ImpletementNPC } from 'src/utils/interface-helper';
 
 export default class Battle {
     public time = 0;
+    public battleLog: string[] = [];
 
     constructor(
         public teamA: Character[],
@@ -55,6 +56,8 @@ export default class Battle {
         if (target.pv <= 0) {
             target.status = CharacterStatuses.Dead;
         }
+        
+        this.battleLog.push(`${source.name} attacked ${target.name} for 1 dmg`);
 
         source.attack(target);
     }
