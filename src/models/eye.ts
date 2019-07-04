@@ -5,12 +5,13 @@ import NPC from './npc';
 export default class Eye extends Character implements NPC {
     public targets: Character[] = [];
     public allies: Character[] = [];
-
+    public speed = 12;
+    
     constructor(
         public id: number,
         public name: string
     ) {
-        super(id, name, CharacterClasses.Fighter);
+        super(id, name, CharacterClasses.Fighter, 10);
     }
 
     public startAbt(): void {

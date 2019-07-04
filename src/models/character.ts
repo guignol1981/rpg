@@ -15,7 +15,6 @@ export enum CharacterStatuses {
 
 export default abstract class Character {
     public pv: number;
-    public maxPv: number;
     public status: CharacterStatuses = CharacterStatuses.Waiting;
     public abt: 0;
     public executeActionObservable: Subject<CharacterAction> = new Subject();
@@ -25,11 +24,10 @@ export default abstract class Character {
     constructor(
         public readonly id: number,
         public readonly name: string,
-        public readonly classe: CharacterClasses
+        public readonly classe: CharacterClasses,
+        public maxPv: number
     ) {
-        this.pv = 100;
-        this.maxPv = 100;
-        this.speed = 40;
+        this.pv = this.maxPv;
         this.abt = 0;
 
         this.resetAbt();
