@@ -1,0 +1,20 @@
+<input [(ngModel)]="speed"
+       type="number">
+<div class="container d-flex justify-content-between">
+    <ul class="list-group">
+        <li class="list-group-item"
+            *ngFor="let log of battle.logs">{{log}}</li>
+    </ul>
+    <ul class="list-group">
+        <li *ngFor="let character of battle.teams[0]"
+            class="list-group-item">
+            <app-character-view [character]="character"></app-character-view>
+        </li>
+    </ul>
+    <ul class="list-group">
+        <li *ngFor="let character of battle.teams[1]"
+            class="list-group-item">
+            <app-character-view [character]="character"></app-character-view>
+        </li>
+    </ul>
+</div>

@@ -1,11 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import Battle from 'src/models/battle';
+import { Component, Input, OnInit } from '@angular/core';
 import Character, { CharacterClasses, CharacterStatuses } from 'src/models/character';
-import { CharacterActionTypes } from 'src/models/charcter-action';
-import Eye from 'src/models/eye';
-import WhiteMage from 'src/models/white-mage';
 import { ImpletementNPC } from 'src/utils/interface-helper';
-import Fighter from 'src/models/fighter';
 
 @Component({
     selector: 'app-character-view',
@@ -13,35 +8,15 @@ import Fighter from 'src/models/fighter';
     styleUrls: ['./character-view.component.scss']
 })
 export class CharacterViewComponent implements OnInit {
-    public battle: Battle = new Battle(
-        [
-            new WhiteMage(1, 'Dummy 1'),
-            new Fighter(1, 'Dummy 2')
-        ],
-        [
-            new Eye(2, 'Npc 1'),
-            new Eye(2, 'Npc 2')
-        ]
-    );
-    public characterActionTypes = CharacterActionTypes;
-
-    constructor() {
-    }
+    @Input()
+    public character: Character;
 
     ngOnInit() {
 
     }
 
-    setNextAction(type: CharacterActionTypes, source: Character, target: Character): void {
-        source.nextAction = {
-            source,
-            target,
-            type
-        };
-    }
-
     getCharacterPvProgress(source: Character): number {
-        return (source.pv / source.maxPv) * 100;
+        return (source.PV / source.maxPV) * 100;
     }
 
     getCharacterImgSrc(source: Character): string {

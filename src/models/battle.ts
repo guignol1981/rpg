@@ -1,19 +1,18 @@
 import { CharacterStatuses } from 'src/models/character';
-import Character from './character';
-import { CharacterActionTypes } from './charcter-action';
-import NPC from './npc';
 import { ImpletementNPC } from 'src/utils/interface-helper';
+import Character from './character';
+import { CharacterActionTypes } from './character-action';
+import NPC from './npc';
 
 export default class Battle {
+    public static speed = 3;
     public time = 0;
-    public battleLog: string[] = [];
+    public logs: string[] = [];
 
     constructor(
-        public teamA: Character[],
-        public teamB: Character[]
-        ) {
-        this.initTeam(teamA);
-        this.initTeam(teamB);
+        public teams: Character[][]
+    ) {
+        this.teams.forEach(t => this.initTeam(t));
 
         this.startTimer();
     }
@@ -27,15 +26,15 @@ export default class Battle {
                 }
 
                 if (action.type === CharacterActionTypes.Attack) {
-                    this.doAttack(action.source, action.target);
+                    this.doAttack(action.source, action.target || this.teams[1][Math.floor(Math.random() * this.teams[1].length)]);
                 }
 
                 action.source.resetAbt();
             });
 
             if (ImpletementNPC(c)) {
-                (c as unknown as NPC).targets = this.teamA;
-                (c as unknown as NPC).allies = this.teamB;
+                (c as unknown as NPC).targets = this.teams[0];
+                (c as unknown as NPC).allies = this.teams[1];
             }
 
             c.startAbt();
@@ -43,21 +42,21 @@ export default class Battle {
     }
 
     startTimer(): void {
-        setInterval(() => this.time++, 1000);
+        setInterval(() => this.time++, 1000 / Battle.speed);
     }
 
     doAttack(source: Character, target: Character): void {
         if (target.status === CharacterStatuses.Defending) {
-            target.pv -= 1;
+            target.PV -= 1;
         } else {
-            target.pv -= 2;
+            target.PV -= 2;
         }
 
-        if (target.pv <= 0) {
+        if (target.PV <= 0) {
             target.status = CharacterStatuses.Dead;
         }
-        
-        this.battleLog.push(`${source.name} attacked ${target.name} for 1 dmg`);
+
+        this.logs.push(`${source.name} attacked ${target.name} for 1 dmg`);
 
         source.attack(target);
     }

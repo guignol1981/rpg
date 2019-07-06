@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CharacterViewComponent } from './character-view/character-view.component';
+import { BattleComponent } from './battle/battle.component';
 
 const routes: Routes = [
     {
-        path: 'character',
-        component: CharacterViewComponent
+        path: 'battle',
+        component: BattleComponent
     },
     {
         path: '',
-        redirectTo: '/character',
+        redirectTo: '/battle',
         pathMatch: 'full'
     }
 ];
