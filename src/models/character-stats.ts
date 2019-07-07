@@ -1,5 +1,5 @@
-import { CharacterClasses } from './character';
 import { CharacterAbilities } from './character-ability';
+import { CharacterClasses } from './character-classe';
 
 export class CharacterStats {
     public readonly maxPV: number;

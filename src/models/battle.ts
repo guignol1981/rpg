@@ -1,8 +1,9 @@
-import { CharacterStatuses } from 'src/models/character';
 import { ImpletementNPC } from 'src/utils/interface-helper';
 import Character from './character';
 import { CharacterAbility } from './character-ability';
 import CharacterAction, { CharacterActionTypes } from './character-action';
+import { CharacterStatuses } from './character-status';
+import GameConfig from './game-config.json';
 import { Item } from './item';
 import NPC from './npc';
 
@@ -12,7 +13,6 @@ export enum BattleTeams {
 }
 
 export default class Battle {
-    public static speed = 3;
     public time = 0;
     public logs: string[] = [];
 
@@ -37,7 +37,7 @@ export default class Battle {
     }
 
     startTimer(): void {
-        setInterval(() => this.time++, 1000 / Battle.speed);
+        setInterval(() => this.time++, 1000 / GameConfig.battleSpeed);
     }
 
     setNPCTeamsAndAllies(npc: NPC): void {
@@ -64,7 +64,6 @@ export default class Battle {
                 this.doAbility(action);
                 break;
             case CharacterActionTypes.None:
-                action.source.resetAbt();
                 break;
         }
     }

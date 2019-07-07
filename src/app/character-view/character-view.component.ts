@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import Character, { CharacterClasses, CharacterStatuses } from 'src/models/character';
+import Character from 'src/models/character';
+import { CharacterClasses } from 'src/models/character-classe';
+import { CharacterStatuses } from 'src/models/character-status';
 import { ImpletementNPC } from 'src/utils/interface-helper';
 
 @Component({

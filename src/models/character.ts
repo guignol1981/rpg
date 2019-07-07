@@ -1,21 +1,10 @@
 import { Subject } from 'rxjs';
 import { Cure } from './abilities/cure';
-import Battle from './battle';
 import CharacterAction, { CharacterActionTypes } from './character-action';
+import { CharacterClasses } from './character-classe';
 import { CharacterStats } from './character-stats';
-
-export enum CharacterClasses {
-    Fighter = 'fighter',
-    WhiteMage = 'white-mage'
-}
-
-export enum CharacterStatuses {
-    Idle = 'idle',
-    Casting = 'casting',
-    Defending = 'defending',
-    Dead = 'dead'
-}
-
+import { CharacterStatuses } from './character-status';
+import GameConfig from './game-config.json';
 
 export default abstract class Character {
     public DEV_ACTIONS: CharacterAction[] = [
@@ -73,7 +62,7 @@ export default abstract class Character {
             if (this.abt >= 100) {
                 this.executeActionObservable.next(this.nextAction);
             }
-        }, 1000 / Battle.speed);
+        }, 1000 / GameConfig.battleSpeed);
     }
 
     public resetAbt(): void {
@@ -98,5 +87,4 @@ export default abstract class Character {
         this.str = stats.str;
         this.def = stats.def;
     }
-
 }

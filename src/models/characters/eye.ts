@@ -1,7 +1,9 @@
-import Battle from './battle';
-import Character, { CharacterClasses, CharacterStatuses } from './character';
-import { CharacterActionTypes } from './character-action';
-import NPC from './npc';
+import Character from '../character';
+import { CharacterActionTypes } from '../character-action';
+import { CharacterClasses } from '../character-classe';
+import { CharacterStatuses } from '../character-status';
+import GameConfig from '../game-config.json';
+import NPC from '../npc';
 
 export default class Eye extends Character implements NPC {
     public targets: Character[] = [];
@@ -36,6 +38,6 @@ export default class Eye extends Character implements NPC {
                     target: this.targets[Math.floor(Math.random() * this.targets.length)]
                 });
             }
-        }, 1000 / Battle.speed);
+        }, 1000 / GameConfig.battleSpeed);
     }
 }

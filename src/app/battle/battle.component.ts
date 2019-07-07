@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import Battle, { BattleTeams } from 'src/models/battle';
 import Character from 'src/models/character';
 import { CharacterActionTypes } from 'src/models/character-action';
-import Eye from 'src/models/eye';
-import Fighter from 'src/models/fighter';
-import WhiteMage from 'src/models/white-mage';
+import Eye from 'src/models/characters/eye';
+import Fighter from 'src/models/characters/fighter';
+import WhiteMage from 'src/models/characters/white-mage';
 
 @Component({
     selector: 'app-battle',
