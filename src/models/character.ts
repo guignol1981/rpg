@@ -1,6 +1,8 @@
 import { Subject } from 'rxjs';
+import { Cure } from './abilities/cure';
 import Battle from './battle';
 import CharacterAction, { CharacterActionTypes } from './character-action';
+import { CharacterStats } from './character-stats';
 
 export enum CharacterClasses {
     Fighter = 'fighter',
@@ -8,14 +10,21 @@ export enum CharacterClasses {
 }
 
 export enum CharacterStatuses {
-    Waiting = 'waiting',
+    Idle = 'idle',
     Casting = 'casting',
     Defending = 'defending',
     Dead = 'dead'
 }
 
+
 export default abstract class Character {
-    public status: CharacterStatuses = CharacterStatuses.Waiting;
+    public DEV_ACTIONS: CharacterAction[] = [
+        { type: CharacterActionTypes.Attack, source: this },
+        // { type: CharacterActionTypes.Item, source: this, value: new Potion() },
+        { type: CharacterActionTypes.Ability, source: this, value: new Cure(this) },
+    ];
+
+    public status: CharacterStatuses = CharacterStatuses.Idle;
 
     public abt: 0;
     public executeActionObservable: Subject<CharacterAction> = new Subject();
@@ -23,6 +32,8 @@ export default abstract class Character {
 
     public speed: number;
     public maxPV: number;
+    public str: number;
+    public def: number;
     protected _PV: number;
 
     constructor(
@@ -31,7 +42,7 @@ export default abstract class Character {
         public readonly classe: CharacterClasses,
         public level: number
     ) {
-        this.initStats();
+        this._initStats();
 
         this._PV = this.maxPV;
         this.abt = 0;
@@ -51,10 +62,8 @@ export default abstract class Character {
         }
     }
 
-    abstract initStats(): void;
-
     public startAbt(): void {
-        const abtInterval: NodeJS.Timer = setInterval(() => {
+        const abtInterval: any = setInterval(() => {
             if (this.status === CharacterStatuses.Dead) {
                 clearInterval(abtInterval);
             }
@@ -69,7 +78,7 @@ export default abstract class Character {
 
     public resetAbt(): void {
         this.abt = 0;
-        this.nextAction = { type: CharacterActionTypes.Attack, source: this };
+        this.nextAction = this.DEV_ACTIONS[Math.floor(Math.random() * this.DEV_ACTIONS.length)];
     }
 
     public attack(target: Character): void { }
@@ -81,4 +90,13 @@ export default abstract class Character {
     public die(): void {
         this.status = CharacterStatuses.Dead;
     }
+
+    private _initStats(): void {
+        const stats = new CharacterStats(this.classe, this.level);
+        this.maxPV = stats.maxPV;
+        this.speed = stats.speed;
+        this.str = stats.str;
+        this.def = stats.def;
+    }
+
 }

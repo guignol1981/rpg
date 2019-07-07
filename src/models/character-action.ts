@@ -4,7 +4,8 @@ export enum CharacterActionTypes {
     None = 'none',
     Attack = 'attack',
     Defend = 'defend',
-    Item = 'item'
+    Item = 'item',
+    Ability = 'ability'
 }
 
 export default interface CharacterAction {

@@ -22,7 +22,7 @@ export default class Eye extends Character implements NPC {
     }
 
     public startAbt(): void {
-        const abtInterval: NodeJS.Timer = setInterval(() => {
+        const abtInterval: any = setInterval(() => {
             if (this.status === CharacterStatuses.Dead) {
                 clearInterval(abtInterval);
             }

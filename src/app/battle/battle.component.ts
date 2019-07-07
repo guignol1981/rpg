@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import Battle from 'src/models/battle';
+import Battle, { BattleTeams } from 'src/models/battle';
 import Character from 'src/models/character';
 import { CharacterActionTypes } from 'src/models/character-action';
 import Eye from 'src/models/eye';
@@ -12,11 +12,12 @@ import WhiteMage from 'src/models/white-mage';
     styleUrls: ['./battle.component.scss']
 })
 export class BattleComponent implements OnInit {
+    public battleTeams = BattleTeams;
 
     public battle: Battle = new Battle(
         [
             [
-                new WhiteMage(1, 1, 'Hero 1'),
+                new WhiteMage(1, 4, 'Hero 1'),
                 new Fighter(1, 2, 'Hero 2')
             ],
             [
