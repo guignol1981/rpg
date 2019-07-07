@@ -1,4 +1,23 @@
-.character-img {
-    width: 100px;
-    height: auto;
+.character-box {
+    width: 30rem;
+    height:8rem;
+
+    &__img {
+        width: 8rem;
+        background-color: orangered;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__info {
+        font-size: 9px;
+        width: 13rem;
+        background-color: violet;
+    }
+
+    &__bars {
+        width: 100%;
+        background-color: yellowgreen;
+    }
 }

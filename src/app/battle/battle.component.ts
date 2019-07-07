@@ -21,8 +21,8 @@ export class BattleComponent implements OnInit {
                 new Fighter(1, 2, 'Hero 2')
             ],
             [
-                new Eye(2, 1, 'Npc 1'),
-                new Eye(2, 2, 'Npc 2')
+                new Eye(3, 4, 'Npc 1'),
+                new Eye(4, 4, 'Npc 2')
             ]
         ]
     );

@@ -1,23 +1,32 @@
 <div *ngIf="character">
-    <h5 class="card-title">{{character.name}}</h5>
-    <div class="d-flex">
-        <ul class="list-group">
+    <div class="d-flex character-box">
+        <div class="character-box__img">
+            <img [src]="characterImgSrc"
+                 alt="">
+        </div>
+        <div class="character-box__info">
             <li class="list-group-item">
-                <p>
-                    <ngb-progressbar type="success"
-                                     [value]="getCharacterPvProgress(character)"></ngb-progressbar>
-                </p>
+                {{character.name}}
             </li>
             <li class="list-group-item">
-                <p>
-                    <ngb-progressbar type="info"
-                                     [value]="character.abt"></ngb-progressbar>
-                </p>
+                Level: {{character.level}}
             </li>
-            <li class="list-group-item">Classe: {{character.classe}}</li>
-            <li class="list-group-item">Status: {{character.status}}</li>
-            <li class="list-group-item">PV: {{character.PV}}</li>
-            <li class="list-group-item">Level: {{character.level}}</li>
-        </ul>
+        </div>
+        <div class="character-box__bars">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p>
+                        <ngb-progressbar type="success"
+                                         [value]="getCharacterPvProgress(character)"></ngb-progressbar>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <p>
+                        <ngb-progressbar type="info"
+                                         [value]="character.abt"></ngb-progressbar>
+                    </p>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

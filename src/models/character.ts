@@ -1,5 +1,4 @@
 import { Subject } from 'rxjs';
-import { Cure } from './abilities/cure';
 import CharacterAction, { CharacterActionTypes } from './character-action';
 import { CharacterClasses } from './character-classe';
 import { CharacterStats } from './character-stats';
@@ -10,7 +9,7 @@ export default abstract class Character {
     public DEV_ACTIONS: CharacterAction[] = [
         { type: CharacterActionTypes.Attack, source: this },
         // { type: CharacterActionTypes.Item, source: this, value: new Potion() },
-        { type: CharacterActionTypes.Ability, source: this, value: new Cure(this) },
+        // { type: CharacterActionTypes.Ability, source: this, value: new Cure(this) },
     ];
 
     public status: CharacterStatuses = CharacterStatuses.Idle;

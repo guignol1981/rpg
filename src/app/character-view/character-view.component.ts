@@ -21,18 +21,18 @@ export class CharacterViewComponent implements OnInit {
         return (source.PV / source.maxPV) * 100;
     }
 
-    getCharacterImgSrc(source: Character): string {
-        switch (source.classe) {
+    get characterImgSrc(): string {
+        switch (this.character.classe) {
             case CharacterClasses.Fighter:
-                if (ImpletementNPC(source)) {
+                if (ImpletementNPC(this.character)) {
                     return 'assets/Eye.gif';
-                } else if (source.status === CharacterStatuses.Dead) {
+                } else if (this.character.status === CharacterStatuses.Dead) {
                     return 'assets/Fighter-Dead.gif';
                 } else {
                     return 'assets/Fighter.gif';
                 }
             case CharacterClasses.WhiteMage:
-                if (source.status === CharacterStatuses.Dead) {
+                if (this.character.status === CharacterStatuses.Dead) {
                     return 'assets/WhiteMage-Dead.gif';
                 } else {
                     return 'assets/WhiteMage.gif';
