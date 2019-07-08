@@ -18,13 +18,13 @@ export class BattleComponent implements OnInit {
         battleService.initTeam(
             [
                 [
-                    new WhiteMage(1, 4, 'WHM 1'),
-                    new WhiteMageNpc(2, 4, 'WHM NPC 1'),
-                    new WhiteMageNpc(3, 4, 'WHM NPC 2'),
+                    new WhiteMage(1, 1, 'WHM 1'),
+                    new WhiteMageNpc(2, 1, 'WHM NPC 1'),
+                    new WhiteMageNpc(3, 1, 'WHM NPC 2'),
                 ],
                 [
-                    new Eye(5, 4, 'Npc 1'),
-                    new Eye(6, 4, 'Npc 2')
+                    new Eye(5, 1, 'Npc 1'),
+                    new Eye(6, 1, 'Npc 2')
                 ]
             ]
         );

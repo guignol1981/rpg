@@ -25,7 +25,7 @@ export class CharacterStats {
                 break;
             case CharacterClasses.WhiteMage:
                 this.maxPV = [10, 20, 30, 40, 50][level];
-                this.speed = [1, 2, 3, 4, 5][level];
+                this.speed = [20, 20, 3, 4, 5][level];
                 this.str = [1, 2, 3, 4, 5][level];
                 this.def = [1, 2, 3, 4, 5][level];
                 this.actionTypes = [

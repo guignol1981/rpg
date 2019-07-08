@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs';
 import GameConfig from '../game-config.json';
 import CharacterAction, { CharacterActionTypes } from './character-action';
 import { CharacterClasses } from './character-classe';
@@ -9,9 +8,7 @@ export default abstract class Character {
     public status: CharacterStatuses = CharacterStatuses.Idle;
 
     public abt = 0;
-    public executeActionObservable: Subject<CharacterAction> = new Subject();
     public nextAction: CharacterAction;
-
     protected pPV: number;
     public speed: number;
     public maxPV: number;
@@ -58,7 +55,7 @@ export default abstract class Character {
                 this.abt = 100;
 
                 if (this.nextAction) {
-                    this.executeActionObservable.next(this.nextAction);
+                    this.nextAction.execute();
                 }
             }
 
@@ -67,6 +64,7 @@ export default abstract class Character {
 
     public resetAbt(): void {
         this.abt = 0;
+        this.status = CharacterStatuses.Idle;
     }
 
     public die(): void {

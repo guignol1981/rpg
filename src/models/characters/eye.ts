@@ -8,7 +8,6 @@ import NPC from '../npc';
 export default class Eye extends Character implements NPC {
     public targets: Character[] = [];
     public allies: Character[] = [];
-    public speed = 12;
 
     constructor(
         id: number,
@@ -24,11 +23,7 @@ export default class Eye extends Character implements NPC {
     }
 
     public startAbt(): void {
-        const abtInterval: any = setInterval(() => {
-            if (this.status === CharacterStatuses.Dead) {
-                clearInterval(abtInterval);
-            }
-
+        this.abtInterval = setInterval(() => {
             this.abt += this.speed;
 
             if (this.abt >= 100) {

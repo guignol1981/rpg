@@ -1,6 +1,7 @@
 import GameConfig from '../../game-config.json';
 import { AttackAction } from '../actions/attack-action';
 import { CureAction } from '../actions/cure-action.js';
+import { DefendAction } from '../actions/defend-action.js';
 import Character from '../character';
 import CharacterAction from '../character-action.js';
 import { CharacterClasses } from '../character-classe';
@@ -20,28 +21,30 @@ export default class WhiteMageNpc extends Character implements NPC {
     }
 
     public startAbt(): void {
-        this.abtInterval = setInterval(() => {
+        this.abtInterval = setInterval(async () => {
             this.abt += this.speed;
 
             if (this.abt >= 100) {
-                const random = Math.random();
+                // const random = Math.random();
+                const random = 0.4;
                 let potentialTargets: Character[];
                 let target: Character;
                 let action: CharacterAction;
 
-                if (random > .5) {
+                if (random > .6) {
                     potentialTargets = this.targets.filter(t => t.status !== CharacterStatuses.Dead);
                     target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
                     action = new AttackAction(this, target);
-                    action.execute();
-                } else {
+                } else if (random > 0.3) {
                     potentialTargets = this.allies.filter(t => t.status !== CharacterStatuses.Dead);
                     target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
                     action = new CureAction(this, target);
-                    action.execute();
+                } else {
+                    action = new DefendAction(this);
                 }
-            }
 
+                await action.execute();
+            }
         }, 1000 / GameConfig.battleSpeed);
     }
 
