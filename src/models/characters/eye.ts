@@ -17,16 +17,18 @@ export default class Eye extends Character implements NPC {
         super(id, name, CharacterClasses.Fighter, level);
     }
 
-    public initStats(): void {
-        this.speed = 5;
-        this.maxPV = 20;
+    protected _initStats(): void {
+        this.speed = 20;
+        this.maxPV = 30;
+        this.str = 4;
+        this.def = 1;
     }
 
     public startAbt(): void {
         this.abtInterval = setInterval(() => {
             this.abt += this.speed;
 
-            if (this.abt >= 100) {
+            if (this.abt >= 100 && !(this.status & CharacterStatuses.CantPerformAction)) {
                 const potentialTargets = this.targets.filter(t => t.status !== CharacterStatuses.Dead);
                 const target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
                 const action = new AttackAction(this, target);

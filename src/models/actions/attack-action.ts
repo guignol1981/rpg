@@ -11,13 +11,17 @@ export class AttackAction extends CharacterAction {
     }
 
     public execute(): void {
+        const dmg: number = Math.random() * Math.floor(this.source.str);
+
         if (this.target.status === CharacterStatuses.Defending) {
-            this.target.PV -= (1 * this.source.str) / 2;
+            this.target.PV -= dmg / 2;
             this.target.status = CharacterStatuses.Idle;
         } else {
-            this.target.PV -= 1 * this.source.str;
+            this.target.PV -= dmg;
         }
 
         this.source.resetAbt();
+
+        console.log(`${this.source.name} attacking ${this.target.name}`);
     }
 }

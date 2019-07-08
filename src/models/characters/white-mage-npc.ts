@@ -24,23 +24,20 @@ export default class WhiteMageNpc extends Character implements NPC {
         this.abtInterval = setInterval(async () => {
             this.abt += this.speed;
 
-            if (this.abt >= 100) {
-                // const random = Math.random();
-                const random = 0.4;
+            if (this.abt >= 100 && !(this.status & CharacterStatuses.CantPerformAction)) {
                 let potentialTargets: Character[];
                 let target: Character;
                 let action: CharacterAction;
+                const wounded: Character = this.allies.find(a => (a.PV / a.maxPV) < .3 && a.id !== this.id && a.isAlive);
 
-                if (random > .6) {
+                if (wounded) {
+                    action = new CureAction(this, wounded);
+                } else if ((this.PV / this.maxPV) < 0.3) {
+                    action = new DefendAction(this);
+                } else {
                     potentialTargets = this.targets.filter(t => t.status !== CharacterStatuses.Dead);
                     target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
                     action = new AttackAction(this, target);
-                } else if (random > 0.3) {
-                    potentialTargets = this.allies.filter(t => t.status !== CharacterStatuses.Dead);
-                    target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
-                    action = new CureAction(this, target);
-                } else {
-                    action = new DefendAction(this);
                 }
 
                 await action.execute();

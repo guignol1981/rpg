@@ -11,5 +11,6 @@ export class DefendAction extends CharacterAction {
 
     public execute(): void {
         this.source.status = CharacterStatuses.Defending;
+        console.log(`${this.source.name} defending`);
     }
 }

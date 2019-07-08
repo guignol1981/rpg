@@ -31,6 +31,10 @@ export default abstract class Character {
         this.resetAbt();
     }
 
+    public get isAlive(): boolean {
+        return this.status !== CharacterStatuses.Dead;
+    }
+
     public get PV(): number {
         return this.pPV;
     }
@@ -72,7 +76,7 @@ export default abstract class Character {
         clearInterval(this.abtInterval);
     }
 
-    private _initStats(): void {
+    protected _initStats(): void {
         const stats = new CharacterStats(this.classe, this.pLevel);
         this.maxPV = stats.maxPV;
         this.speed = stats.speed;
