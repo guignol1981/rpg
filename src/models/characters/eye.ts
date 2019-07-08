@@ -1,8 +1,8 @@
+import GameConfig from '../../game-config.json';
+import { AttackAction } from '../actions/attack-action.js';
 import Character from '../character';
-import { CharacterActionTypes } from '../character-action';
 import { CharacterClasses } from '../character-classe';
 import { CharacterStatuses } from '../character-status';
-import GameConfig from '../game-config.json';
 import NPC from '../npc';
 
 export default class Eye extends Character implements NPC {
@@ -11,9 +11,9 @@ export default class Eye extends Character implements NPC {
     public speed = 12;
 
     constructor(
-        public id: number,
-        public level: number,
-        public name: string
+        id: number,
+        level: number,
+        name: string
     ) {
         super(id, name, CharacterClasses.Fighter, level);
     }
@@ -32,12 +32,13 @@ export default class Eye extends Character implements NPC {
             this.abt += this.speed;
 
             if (this.abt >= 100) {
-                this.executeActionObservable.next({
-                    type: CharacterActionTypes.Attack,
-                    source: this,
-                    target: this.targets[Math.floor(Math.random() * this.targets.length)]
-                });
+                const potentialTargets = this.targets.filter(t => t.status !== CharacterStatuses.Dead);
+                const target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
+                const action = new AttackAction(this, target);
+
+                action.execute();
             }
+
         }, 1000 / GameConfig.battleSpeed);
     }
 }

@@ -1,0 +1,11 @@
+.controller-box {
+    background-color: blueviolet;
+
+    &__action {
+        background-color: orangered;
+    }
+
+    &__options {
+        background-color: greenyellow;
+    }
+}

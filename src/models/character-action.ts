@@ -5,12 +5,18 @@ export enum CharacterActionTypes {
     Attack = 'attack',
     Defend = 'defend',
     Item = 'item',
-    Ability = 'ability'
+    Cure = 'cure'
 }
 
-export default interface CharacterAction {
-    type: CharacterActionTypes;
-    source?: Character;
-    target?: Character;
-    value?: any;
+export default abstract class CharacterAction {
+    public constructor(
+        public type: CharacterActionTypes,
+        public needTarget: boolean,
+        public source?: Character,
+        public target?: Character,
+        public range?: number,
+        public value?: any,
+    ) { }
+
+    abstract execute(): void;
 }

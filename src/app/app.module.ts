@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BattleComponent } from './battle/battle.component';
 import { CharacterViewComponent } from './character-view/character-view.component';
+import { CharacterControllerComponent } from './character-controller/character-controller.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         CharacterViewComponent,
-        BattleComponent
+        BattleComponent,
+        CharacterControllerComponent
     ],
     imports: [
         BrowserModule,

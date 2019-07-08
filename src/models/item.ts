@@ -8,7 +8,6 @@ export abstract class Item {
     constructor(
         public readonly type: ItemTypes,
         public readonly name: string,
-        public readonly source?: Character,
     ) { }
 
     abstract use(target?: Character): void;

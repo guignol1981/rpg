@@ -3,9 +3,9 @@ import { CharacterClasses } from '../character-classe';
 
 export default class WhiteMage extends Character {
     constructor(
-        public id: number,
-        public level: number,
-        public name: string
+        id: number,
+        level: number,
+        name: string,
     ) {
         super(id, name, CharacterClasses.WhiteMage, level);
     }

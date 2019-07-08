@@ -1,17 +1,20 @@
-<div class="container d-flex justify-content-between">
-    <ul class="list-group">
-        <li *ngFor="let character of battle.teams[battleTeams.TeamB]"
-            class="list-group-item">
-            <app-character-view [character]="character"></app-character-view>
-        </li>
-    </ul>
-    <ul class="list-group">
-        <li *ngFor="let character of battle.teams[battleTeams.TeamA]"
-            class="list-group-item">
-            <div class="d-flex justify-content-between">
-                <app-character-view [character]="character"
-                                    class="w-100"></app-character-view>
-            </div>
-        </li>
-    </ul>
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <ul class="list-group">
+            <li *ngFor="let character of battleService.teams[battleTeams.TeamB]"
+                class="list-group-item">
+                <app-character-view [character]="character"></app-character-view>
+            </li>
+        </ul>
+        <ul class="list-group">
+            <li *ngFor="let character of battleService.teams[battleTeams.TeamA]"
+                class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <app-character-view [character]="character"
+                                        class="w-100"></app-character-view>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <app-character-controller></app-character-controller>
 </div>
