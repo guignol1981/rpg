@@ -18,10 +18,10 @@ export default class Eye extends Character implements NPC {
     }
 
     protected _initStats(): void {
-        this.speed = 20;
-        this.maxPV = 30;
-        this.str = 4;
-        this.def = 1;
+        this.maxPV = [10, 20, 30, 40, 50][this.level - 1];
+        this.speed = [4, 5, 3, 4, 5][this.level - 1];
+        this.str = [1, 2, 3, 4, 5][this.level - 1];
+        this.def = [1, 2, 3, 4, 5][this.level - 1];
     }
 
     public startAbt(): void {
@@ -29,13 +29,21 @@ export default class Eye extends Character implements NPC {
             this.abt += this.speed;
 
             if (this.abt >= 100 && !(this.status & CharacterStatuses.CantPerformAction)) {
-                const potentialTargets = this.targets.filter(t => t.status !== CharacterStatuses.Dead);
+                const potentialTargets = this.targets.filter(t => t.isAlive);
                 const target = potentialTargets[Math.floor(Math.random() * potentialTargets.length)];
+
+                if (!target) {
+                    return;
+                }
+
                 const action = new AttackAction(this, target);
 
                 action.execute();
             }
-
         }, 1000 / GameConfig.battleSpeed);
+    }
+
+    public get imgSrc(): string {
+        return 'assets/Eye.gif';
     }
 }

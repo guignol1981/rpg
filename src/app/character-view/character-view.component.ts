@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Character from 'src/models/character';
-import { CharacterClasses } from 'src/models/character-classe';
-import { CharacterStatuses } from 'src/models/character-status';
-import { ImpletementNPC } from 'src/utils/interface-helper';
 
 @Component({
     selector: 'app-character-view',
@@ -22,25 +19,6 @@ export class CharacterViewComponent implements OnInit {
     }
 
     get characterImgSrc(): string {
-        switch (this.character.classe) {
-            case CharacterClasses.Fighter:
-                if (ImpletementNPC(this.character)) {
-                    return 'assets/Eye.gif';
-                } else if (this.character.status === CharacterStatuses.Dead) {
-                    return 'assets/Fighter-Dead.gif';
-                } else {
-                    return 'assets/Fighter.gif';
-                }
-            case CharacterClasses.WhiteMage:
-                if (this.character.status === CharacterStatuses.Dead) {
-                    return 'assets/WhiteMage-Dead.gif';
-                } else if (this.character.status === CharacterStatuses.Defending) {
-                    return 'assets/WhiteMage.gif';
-                } else if (this.character.status === CharacterStatuses.Casting) {
-                    return 'assets/WhiteMage-CURE.gif';
-                } else {
-                    return 'assets/WhiteMage-Walk.gif';
-                }
-        }
+        return this.character.imgSrc;
     }
 }

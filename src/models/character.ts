@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import GameConfig from '../game-config.json';
 import CharacterAction, { CharacterActionTypes } from './character-action';
 import { CharacterClasses } from './character-classe';
@@ -6,7 +7,6 @@ import { CharacterStatuses } from './character-status';
 
 export default abstract class Character {
     public status: CharacterStatuses = CharacterStatuses.Idle;
-
     public abt = 0;
     public nextAction: CharacterAction;
     protected pPV: number;
@@ -15,7 +15,9 @@ export default abstract class Character {
     public str: number;
     public def: number;
     public actionsTypes: CharacterActionTypes[];
+    public deathObservable: Subject<Character> = new Subject<Character>();
     protected abtInterval: any;
+
 
     constructor(
         public readonly id: number,
@@ -35,6 +37,10 @@ export default abstract class Character {
         return this.status !== CharacterStatuses.Dead;
     }
 
+    public get isWounded(): boolean {
+        return (this.pPV / this.maxPV) < 0.3;
+    }
+
     public get PV(): number {
         return this.pPV;
     }
@@ -46,6 +52,8 @@ export default abstract class Character {
             this.die();
         }
     }
+
+    public abstract get imgSrc(): string;
 
     public get level(): number {
         return this.pLevel;
@@ -72,12 +80,20 @@ export default abstract class Character {
     }
 
     public die(): void {
-        this.status = CharacterStatuses.Dead;
         clearInterval(this.abtInterval);
+
+        this.status = CharacterStatuses.Dead;
+        this.deathObservable.next(this);
+    }
+
+    public win(): void {
+        clearInterval(this.abtInterval);
+
+        this.status = CharacterStatuses.Victorious;
     }
 
     protected _initStats(): void {
-        const stats = new CharacterStats(this.classe, this.pLevel);
+        const stats = new CharacterStats(this);
         this.maxPV = stats.maxPV;
         this.speed = stats.speed;
         this.str = stats.str;

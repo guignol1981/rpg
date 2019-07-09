@@ -17,6 +17,10 @@ export class CureAction extends CharacterAction {
         this.source.status = CharacterStatuses.Casting;
 
         setTimeout(() => {
+            if (this.source.status === CharacterStatuses.Victorious) {
+                return;
+            }
+
             if (this.target.isAlive) {
                 this.target.PV += 20 * this.source.level;
                 console.log(`${this.source.name} casting Cure on ${this.target.name}`);

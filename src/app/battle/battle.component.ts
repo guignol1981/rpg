@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterActionTypes } from 'src/models/character-action';
 import Eye from 'src/models/characters/eye';
+import FighterNpc from 'src/models/characters/fighter-npc';
 import WhiteMageNpc from 'src/models/characters/white-mage-npc';
 import { BattleService, BattleTeams } from '../battle.service';
 
@@ -17,13 +18,13 @@ export class BattleComponent implements OnInit {
         battleService.initTeam(
             [
                 [
-                    // new WhiteMage(1, 1, 'WHM 1'),
-                    new WhiteMageNpc(2, 1, 'WHM NPC 1'),
+                    new FighterNpc(2, 1, 'FHT NPC 1'),
                     new WhiteMageNpc(3, 1, 'WHM NPC 2'),
+                    new WhiteMageNpc(3, 1, 'WHM NPC 2')
                 ],
                 [
-                    new Eye(5, 2, 'Npc 1'),
-                    new Eye(6, 2, 'Npc 2')
+                    new Eye(7, 2, 'Npc 1'),
+                    new Eye(8, 2, 'Npc 2')
                 ]
             ]
         );

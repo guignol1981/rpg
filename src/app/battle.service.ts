@@ -28,6 +28,9 @@ export class BattleService {
                     if (ImpletementNPC(c)) {
                         this.setNPCTeamsAndAllies(c as unknown as NPC);
                     }
+
+                    c.deathObservable.subscribe(death => this.observeCharacterDeath(death));
+
                     c.startAbt();
                 }));
 
@@ -36,6 +39,14 @@ export class BattleService {
 
     startTimer(): void {
         setInterval(() => this.time++, 1000 / GameConfig.battleSpeed);
+    }
+
+    observeCharacterDeath(character: Character): void {
+        this.teams = this.teams.map(t => t.filter(c => c.id !== character.id));
+
+        if (!this.teams[BattleTeams.TeamB].length) {
+            this.teams[BattleTeams.TeamA].forEach(c => c.win());
+        }
     }
 
     setNPCTeamsAndAllies(npc: NPC): void {
