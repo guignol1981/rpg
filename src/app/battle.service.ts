@@ -17,7 +17,8 @@ export class BattleService {
     public logs: string[] = [];
     public teams: Character[][];
 
-    constructor() { }
+    constructor() {
+    }
 
     initTeam(teams: Character[][]): void {
         this.teams = teams;
