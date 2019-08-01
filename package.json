@@ -8,8 +8,8 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "server": "node_modules/.bin/ts-node-dev server/server.ts",
-        "dev": "concurrently --kill-others  \"ng build --watch\" \"npm run server\""
+        "server": "node_modules/.bin/ts-node-dev  server/server.ts",
+        "dev": "concurrently --kill-others \"ng build --watch\" \"npm run server\""
     },
     "private": true,
     "dependencies": {
@@ -26,6 +26,7 @@
         "@types/selenium-webdriver": "^4.0.1",
         "@types/socket.io-client": "^1.4.32",
         "bootstrap": "^4.3.1",
+        "esm": "^3.2.25",
         "express": "^4.17.1",
         "jquery": "^3.4.1",
         "rxjs": "~6.4.0",
@@ -38,6 +39,9 @@
         "@angular/cli": "~8.0.6",
         "@angular/compiler-cli": "~8.0.3",
         "@angular/language-service": "~8.0.3",
+        "@babel/cli": "^7.5.5",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
         "@types/jasmine": "~3.3.8",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "~8.9.4",
