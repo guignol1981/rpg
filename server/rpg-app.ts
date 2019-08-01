@@ -13,8 +13,6 @@ export default class RpgApp {
     ) {
         this.server = http.createServer(this.app);
 
-        this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
-
         this._configureApp();
         this._initSockets();
         this._startServer();
@@ -22,6 +20,7 @@ export default class RpgApp {
 
     private _configureApp() {
         this.app.use(express.static(path.join(__dirname, '../dist/rpg')));
+        this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
     }
 
     private _initSockets() {
