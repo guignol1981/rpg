@@ -1,7 +1,6 @@
-const express = require('express');
-const path = require('path');
-const http = require('http');
-
+import express from 'express';
+import http from 'http';
+import path from 'path';
 
 export default class RpgApp {
     private app = express();
