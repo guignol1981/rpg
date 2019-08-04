@@ -1,10 +1,10 @@
+import dotenv from 'dotenv';
+import express from 'express';
+import http from 'http';
+import mongoose from 'mongoose';
+import path from 'path';
 import BattleLobby from './models/battle-lobby';
 import WhiteMage from './models/characters/white-mage';
-
-const express = require('express');
-const path = require('path');
-const http = require('http');
-
 
 export default class RpgApp {
     private app = express();
@@ -17,16 +17,26 @@ export default class RpgApp {
     ) {
         this.server = http.createServer(this.app);
 
+        this._setEnv();
+        this._initDataBase();
         this._configureApp();
-
-        this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
-
         this._initSockets();
         this._startServer();
     }
 
+    private _setEnv() {
+        if (process.env.NODE_ENV !== 'production') {
+            dotenv.config();
+        }
+    }
+
+    private _initDataBase(): void {
+        mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+    }
+
     private _configureApp() {
         this.app.use(express.static(path.join(__dirname, '../dist/rpg')));
+        this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
     }
 
     private _initSockets() {
@@ -35,17 +45,13 @@ export default class RpgApp {
         this.io.on('connection', (socket) => {
             console.log('a user connected');
 
-            this.battleLobby.characters.push(new WhiteMage(1, 1, 'test'));
+            const character: WhiteMage = new WhiteMage(1, 1, 'test');
+
+            this.battleLobby.characters.push(character);
+
+            socket.emit('battle-lobby', this.battleLobby);
 
             console.log('there is ' + this.battleLobby.characters.length + ' in the battle lobby');
-
-            socket.on('event1', (data: any) => {
-                console.log(data.msg);
-            });
-
-            socket.emit('event2', {
-                msg: 'Server to client, do you read me? Over.'
-            });
         });
     }
 

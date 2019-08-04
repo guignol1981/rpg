@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BattleLobbyComponent } from './battle-lobby/battle-lobby.component';
 import { BattleComponent } from './battle/battle.component';
 
 const routes: Routes = [
@@ -8,8 +9,12 @@ const routes: Routes = [
         component: BattleComponent
     },
     {
+        path: 'battle-lobby',
+        component: BattleLobbyComponent
+    },
+    {
         path: '',
-        redirectTo: '/battle',
+        redirectTo: '/battle-lobby',
         pathMatch: 'full'
     }
 ];
