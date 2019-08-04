@@ -49,7 +49,7 @@ export default class RpgApp {
 
             this.battleLobby.characters.push(character);
 
-            socket.emit('battle-lobby', this.battleLobby);
+            this.io.emit('battle-lobby', this.battleLobby);
 
             console.log('there is ' + this.battleLobby.characters.length + ' in the battle lobby');
         });

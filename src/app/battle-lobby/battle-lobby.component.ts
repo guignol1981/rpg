@@ -10,6 +10,7 @@ import * as io from 'socket.io-client';
 export class BattleLobbyComponent implements OnInit {
     public socket: SocketIOClient.Socket = io.connect();
     public battleLobby: BattleLobby;
+
     constructor() { }
 
     ngOnInit() {
