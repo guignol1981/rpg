@@ -1,13 +1,17 @@
 import dotenv from 'dotenv';
-import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
+import passport from 'passport';
 import path from 'path';
 import BattleLobby from './models/battle-lobby';
 import WhiteMage from './models/characters/white-mage';
+import bodyParser = require('body-parser');
+import express = require('express');
+import expressSession = require('express-session');
 
 export default class RpgApp {
     private app = express();
+    private router = express.Router();
     private server: any;
     private io: any;
     private battleLobby: BattleLobby = new BattleLobby();
@@ -19,12 +23,13 @@ export default class RpgApp {
 
         this._setEnv();
         this._initDataBase();
-        this._configureApp();
+        this._initMiddleWares();
+        this._initRouter();
         this._initSockets();
         this._startServer();
     }
 
-    private _setEnv() {
+    private _setEnv(): void {
         if (process.env.NODE_ENV !== 'production') {
             dotenv.config();
         }
@@ -34,12 +39,25 @@ export default class RpgApp {
         mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
     }
 
-    private _configureApp() {
+    private _initMiddleWares(): void {
         this.app.use(express.static(path.join(__dirname, '../dist/rpg')));
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(expressSession({
+            secret: 'not so secret',
+            resave: false,
+            saveUninitialized: false
+        }));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
+    }
+
+    private _initRouter(): void {
+        this.router.post('/users/register', (req, res) => console.log('ok'));
+        this.app.use('/api', this.router);
         this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
     }
 
-    private _initSockets() {
+    private _initSockets(): void {
         this.io = require('socket.io')(this.server);
 
         this.io.on('connection', (socket) => {
@@ -55,7 +73,7 @@ export default class RpgApp {
         });
     }
 
-    private _startServer() {
+    private _startServer(): void {
         this.server.listen(this.port, () => console.log(`RPG listening on port ${this.port}!`));
     }
 }

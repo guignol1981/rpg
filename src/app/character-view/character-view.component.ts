@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import Character from 'src/models/character';
+import Character from 'server/models/character';
 
 @Component({
     selector: 'app-character-view',
