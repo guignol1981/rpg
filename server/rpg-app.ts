@@ -54,6 +54,14 @@ export default class RpgApp {
     }
 
     private _initRouter(): void {
+        this.router.post('/test', passport.authenticate('local', {
+            successRedirect: 'testsuccess',
+            failureRedirect: 'testfailure'
+        }));
+
+        this.router.get('/testsuccess', (req, res) => console.log(req.user));
+        this.router.get('/testfailure', () => console.log('failed'));
+
         this.router.post('/users/register', (req, res) => {
             const registerData: any = req.body;
             const userModel = new UserModel(registerData);

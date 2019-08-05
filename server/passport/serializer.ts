@@ -1,4 +1,3 @@
-
 import passport from 'passport';
 import UserModel from '../schemas/user';
 

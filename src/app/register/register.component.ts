@@ -22,4 +22,8 @@ export class RegisterComponent implements OnInit {
     onRegisterClicked(): void {
         this.userService.register(this.formGroup.value);
     }
+
+    test(): void {
+        this.userService.test();
+    }
 }

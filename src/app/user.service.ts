@@ -10,4 +10,8 @@ export class UserService {
     register(data: any): Promise<any> {
         return this.httpClient.post('api/users/register', data).toPromise().then((response) => true);
     }
+
+    test(): Promise<any> {
+        return this.httpClient.post('api/test', { username: 'test', password: 'test' }).toPromise().then(() => true);
+    }
 }
