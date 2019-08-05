@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MustMatch } from 'src/validators/must-match';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,17 +14,18 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.formGroup = new FormGroup({
-            username: new FormControl('', [Validators.required]),
+            username: new FormControl('', [Validators.required, Validators.minLength(3)]),
             email: new FormControl('', [Validators.email]),
-            password: new FormControl('', [Validators.required])
-        });
+            password: new FormControl('', [Validators.required, Validators.minLength(5)]),
+            confirmPassword: new FormControl('', [Validators.required, Validators.minLength(5)])
+        }, [MustMatch('password', 'confirmPassword')]);
     }
 
     onRegisterClicked(): void {
-        this.userService.register(this.formGroup.value);
-    }
+        if (!this.formGroup.valid) {
+            return;
+        }
 
-    test(): void {
-        this.userService.test();
+        this.userService.register(this.formGroup.value);
     }
 }

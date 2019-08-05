@@ -74,10 +74,9 @@ export default class RpgApp {
 
             userModel.save().then((user) => {
                 req.login(user, () => {
-                    res.redirect('/login');
-                    // res.send({
-                    //     msg: 'Registration successful'
-                    // });
+                    res.send({
+                        msg: 'Registration successful'
+                    });
                 });
             });
         });

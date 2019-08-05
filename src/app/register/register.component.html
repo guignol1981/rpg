@@ -29,11 +29,19 @@
                    placeholder="Password">
         </div>
 
-        <button class="btn btn-primary"
+        <div class="form-group">
+            <label for="confirmPassword">Confirm password</label>
+            <input formControlName="confirmPassword"
+                   type="password"
+                   class="form-control"
+                   id="confirmPassword"
+                   placeholder="Confirm password">
+        </div>
+
+        <button [class]="formGroup.valid ? 'btn btn-primary' : 'btn btn-disabled'"
                 (click)="onRegisterClicked()">Register</button>
 
         <a routerLink="/login"
            class="btn btn-secondary ml-1">Already a member</a>
     </form>
-    <button (click)="test()"></button>
 </div>
