@@ -5,6 +5,7 @@ import passport from 'passport';
 import path from 'path';
 import BattleLobby from './models/battle-lobby';
 import WhiteMage from './models/characters/white-mage';
+import UserModel from './schemas/user';
 import bodyParser = require('body-parser');
 import express = require('express');
 import expressSession = require('express-session');
@@ -42,17 +43,33 @@ export default class RpgApp {
     private _initMiddleWares(): void {
         this.app.use(express.static(path.join(__dirname, '../dist/rpg')));
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json());
         this.app.use(expressSession({
-            secret: 'not so secret',
+            secret: process.env.SESSION_SECRET,
             resave: false,
-            saveUninitialized: false
+            saveUninitialized: true
         }));
         this.app.use(passport.initialize());
         this.app.use(passport.session());
     }
 
     private _initRouter(): void {
-        this.router.post('/users/register', (req, res) => console.log('ok'));
+        this.router.post('/users/register', (req, res) => {
+            const registerData: any = req.body;
+            const userModel = new UserModel(registerData);
+
+            userModel.setPassword(registerData.password);
+
+            userModel.save().then((user) => {
+                req.login(user, () => {
+                    res.redirect('/login');
+                    // res.send({
+                    //     msg: 'Registration successful'
+                    // });
+                });
+            });
+        });
+
         this.app.use('/api', this.router);
         this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
     }

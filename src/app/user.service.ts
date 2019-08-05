@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,11 +7,7 @@ import { Injectable } from '@angular/core';
 export class UserService {
     constructor(private httpClient: HttpClient) { }
 
-    register(): Promise<any> {
-        const httpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        return this.httpClient.post('api/users/register', {}, { headers: httpHeaders }).toPromise().then(() => true);
+    register(data: any): Promise<any> {
+        return this.httpClient.post('api/users/register', data).toPromise().then((response) => true);
     }
 }
