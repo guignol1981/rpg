@@ -12,6 +12,6 @@ export class UserService {
     }
 
     test(): Promise<any> {
-        return this.httpClient.post('api/test', { username: 'test', password: 'test' }).toPromise().then(() => true);
+        return this.httpClient.post('api/test', { username: 'test', password: 'test123' }).toPromise().then(() => true);
     }
 }

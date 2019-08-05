@@ -1,3 +1,4 @@
+import flash from 'connect-flash';
 import dotenv from 'dotenv';
 import http from 'http';
 import mongoose from 'mongoose';
@@ -41,6 +42,7 @@ export default class RpgApp {
     }
 
     private _initMiddleWares(): void {
+        this.app.use(flash());
         this.app.use(express.static(path.join(__dirname, '../dist/rpg')));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
@@ -56,11 +58,13 @@ export default class RpgApp {
     private _initRouter(): void {
         this.router.post('/test', passport.authenticate('local', {
             successRedirect: 'testsuccess',
-            failureRedirect: 'testfailure'
+            failureRedirect: 'testfailure',
+            successFlash: true,
+            failureFlash: true
         }));
 
         this.router.get('/testsuccess', (req, res) => console.log(req.user));
-        this.router.get('/testfailure', () => console.log('failed'));
+        this.router.get('/testfailure', (req, res) => res.send());
 
         this.router.post('/users/register', (req, res) => {
             const registerData: any = req.body;
