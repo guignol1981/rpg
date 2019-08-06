@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
         }, [MustMatch('password', 'confirmPassword')]);
     }
 
-    onRegisterClicked(): void {
+    register(): void {
         if (!this.formGroup.valid) {
             return;
         }

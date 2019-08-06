@@ -7,11 +7,11 @@ import { Injectable } from '@angular/core';
 export class UserService {
     constructor(private httpClient: HttpClient) { }
 
-    register(data: any): Promise<any> {
-        return this.httpClient.post('api/users/register', data).toPromise().then((response) => true);
+    register(data: any): Promise<boolean> {
+        return this.httpClient.post('api/users/register', data).toPromise().then(() => true);
     }
 
-    test(): Promise<any> {
-        return this.httpClient.post('api/test', { username: 'test', password: 'test123' }).toPromise().then(() => true);
+    login(data: any): Promise<boolean> {
+        return this.httpClient.post('api/users/login', data).toPromise().then(() => true);
     }
 }
