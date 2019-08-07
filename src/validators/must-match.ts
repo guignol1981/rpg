@@ -1,7 +1,7 @@
-import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 
 export function MustMatch(controlName: string, matchingControlName: string): ValidatorFn {
-    return (formGroup: FormGroup): ValidationErrors | null => {
+    return (formGroup: FormGroup): any => {
         const control = formGroup.get(controlName);
         const matchingControl = formGroup.get(matchingControlName);
 
@@ -12,7 +12,7 @@ export function MustMatch(controlName: string, matchingControlName: string): Val
         if (control.value === matchingControl.value) {
             return null;
         } else {
-            return { mustMatch: true };
+            matchingControl.setErrors(Object.assign(matchingControl.errors || {}, { mustmatch: true }));
         }
     };
 }

@@ -59,6 +59,13 @@
                    class="form-control"
                    id="confirmPassword"
                    placeholder="Confirm password">
+
+            <div *ngIf="confirmPasswordControl.invalid && (confirmPasswordControl.touched || confirmPasswordControl.dirty)">
+
+                <small *ngIf="confirmPasswordControl.errors.mustmatch"
+                       id="confirmPasswordHelp"
+                       class="form-text text-danger">Email must match</small>
+            </div>
         </div>
 
         <button [class]="formGroup.valid ? 'btn btn-primary' : 'btn btn-disabled'"
