@@ -14,4 +14,12 @@ export class UserService {
     login(data: any): Promise<boolean> {
         return this.httpClient.post('api/users/login', data).toPromise().then(() => true);
     }
+
+    usernameAvaibility(username: string): Promise<boolean> {
+        return this.httpClient.post('api/users/username-avaibility', { username }).toPromise().then((res: any) => res.data);
+    }
+
+    emailAvaibility(email: string): Promise<boolean> {
+        return this.httpClient.post('api/users/email-avaibility', { email }).toPromise().then((res: any) => res.data);
+    }
 }

@@ -62,10 +62,28 @@ export default class RpgApp {
             });
         });
 
-        this.router.post('/user/logout', (req, res) => {
+        this.router.post('/users/logout', (req, res) => {
             req.logout();
             res.send({
                 msg: 'Logout successful'
+            });
+        });
+
+        this.router.post('/users/username-avaibility', (req, res) => {
+            UserModel.find({ username: req.body.username }).exec((err, docs) => {
+                res.send({
+                    data: !docs.length,
+                    msg: !!docs.length ? 'username not available' : 'username available'
+                });
+            });
+        });
+
+        this.router.post('/users/email-avaibility', (req, res) => {
+            UserModel.find({ email: req.body.email }).exec((err, docs) => {
+                res.send({
+                    data: !docs.length,
+                    msg: !!docs.length ? 'email not available' : 'email available'
+                });
             });
         });
 

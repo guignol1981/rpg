@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/validators/must-match';
 import { UserService } from '../user.service';
 
@@ -14,8 +14,8 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.formGroup = new FormGroup({
-            username: new FormControl('', [Validators.required, Validators.minLength(3)]),
-            email: new FormControl('', [Validators.required, Validators.email]),
+            username: new FormControl('', [Validators.required, Validators.minLength(3)], this._usernameAvailbility.bind(this)),
+            email: new FormControl('', [Validators.required, Validators.email], this._emailAvaibility.bind(this)),
             password: new FormControl('', [Validators.required, Validators.minLength(5)]),
             confirmPassword: new FormControl('', [Validators.required])
         }, [MustMatch('password', 'confirmPassword')]);
@@ -43,5 +43,17 @@ export class RegisterComponent implements OnInit {
         }
 
         this.userService.register(this.formGroup.value);
+    }
+
+    private _usernameAvailbility(control: AbstractControl) {
+        return this.userService.usernameAvaibility(control.value).then(res => {
+            return res ? null : { usernameTaken: true };
+        });
+    }
+
+    private _emailAvaibility(control: AbstractControl) {
+        return this.userService.emailAvaibility(control.value).then(res => {
+            return res ? null : { emailTaken: true };
+        });
     }
 }
