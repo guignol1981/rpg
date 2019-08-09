@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RpgHttpResponse } from 'server/models/rpg-http-response';
 import { UserService } from '../user.service';
 
 @Component({
@@ -19,12 +20,25 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    login(): void {
+    public get emailControl(): FormControl {
+        return this.formGroup.get('email') as FormControl;
+    }
+
+    public get passwordControl(): FormControl {
+        return this.formGroup.get('password') as FormControl;
+    }
+
+    public login(): void {
         if (!this.formGroup.valid) {
             return;
         }
 
-        this.userService.login(this.formGroup.value);
+        this.userService.login(this.formGroup.value).then((response: RpgHttpResponse) => {
+            if (response.data) {
+                console.log('success');
+            } else {
+                alert(response.msg);
+            }
+        });
     }
-
 }
