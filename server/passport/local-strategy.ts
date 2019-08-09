@@ -8,9 +8,6 @@ passport.use(new LocalStrategy(
         passwordField: 'password'
     },
     (username, password, done) => {
-        console.log(username);
-        console.log(password);
-
         UserModel.findOne({ email: username }, (err, user) => {
             if (err) { return done(err); }
 

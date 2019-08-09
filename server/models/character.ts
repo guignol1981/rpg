@@ -18,7 +18,6 @@ export default abstract class Character {
     public deathObservable: Subject<Character> = new Subject<Character>();
     protected abtInterval: any;
 
-
     constructor(
         public readonly id: number,
         public readonly name: string,

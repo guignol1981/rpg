@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
 @Component({
@@ -9,8 +10,9 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
     public formGroup: FormGroup;
+    public tryAgain = false;
 
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService, private router: Router) { }
 
     ngOnInit() {
         this.formGroup = new FormGroup({
@@ -24,7 +26,12 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        this.userService.login(this.formGroup.value);
+        this.userService.login(this.formGroup.value).then((success) => {
+            if (!success) {
+                this.tryAgain = !success;
+            } else {
+                this.router.navigateByUrl('/character-creation');
+            }
+        });
     }
-
 }

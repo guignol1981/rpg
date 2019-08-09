@@ -6,7 +6,8 @@ import passport from 'passport';
 import path from 'path';
 import BattleLobby from './models/battle-lobby';
 import WhiteMage from './models/characters/white-mage';
-import UserModel from './schemas/user';
+import characterRouter from './routers/character-router';
+import userRouter from './routers/user-router';
 import bodyParser = require('body-parser');
 import express = require('express');
 import expressSession = require('express-session');
@@ -56,53 +57,8 @@ export default class RpgApp {
     }
 
     private _initRouter(): void {
-        this.router.post('/users/login', passport.authenticate('local'), (req, res) => {
-            res.send({
-                msg: 'Login successful'
-            });
-        });
-
-        this.router.post('/users/logout', (req, res) => {
-            req.logout();
-            res.send({
-                msg: 'Logout successful'
-            });
-        });
-
-        this.router.post('/users/username-avaibility', (req, res) => {
-            UserModel.find({ username: req.body.username }).exec((err, docs) => {
-                res.send({
-                    data: !docs.length,
-                    msg: !!docs.length ? 'username not available' : 'username available'
-                });
-            });
-        });
-
-        this.router.post('/users/email-avaibility', (req, res) => {
-            UserModel.find({ email: req.body.email }).exec((err, docs) => {
-                res.send({
-                    data: !docs.length,
-                    msg: !!docs.length ? 'email not available' : 'email available'
-                });
-            });
-        });
-
-        this.router.post('/users/register', (req, res) => {
-            const registerData: any = req.body;
-            const userModel = new UserModel(registerData);
-
-            userModel.setPassword(registerData.password);
-
-            userModel.save().then((user) => {
-                req.login(user, () => {
-                    res.send({
-                        msg: 'Registration successful'
-                    });
-                });
-            });
-        });
-
-        this.app.use('/api', this.router);
+        this.app.use('/api/users', userRouter);
+        this.app.use('/api/characters', characterRouter);
         this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
     }
 
