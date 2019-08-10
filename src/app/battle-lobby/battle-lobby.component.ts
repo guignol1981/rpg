@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import BattleLobby from 'server/models/battle-lobby';
+import Game from 'server/models/game';
 import * as io from 'socket.io-client';
 
 @Component({
@@ -14,8 +15,8 @@ export class BattleLobbyComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.socket.on('battle-lobby', (battleLobby: BattleLobby) => {
-            this.battleLobby = battleLobby;
+        this.socket.on('game', (game: Game) => {
+
         });
     }
 }
