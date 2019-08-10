@@ -14,7 +14,7 @@ import express = require('express');
 import expressSession = require('express-session');
 
 const MongoStore = require('connect-mongo')(expressSession);
-const sessionMiddleware = expressSession({
+const sessionMiddleWare = expressSession({
     secret: 'test',
     resave: false,
     saveUninitialized: true,
@@ -28,12 +28,18 @@ export default class RpgApp {
     private game: Game = new Game();
 
     constructor(
-        public readonly port: number
+        public readonly port: number,
+        runFixtures = false
     ) {
         this.server = http.createServer(this.app);
 
         this._setEnv();
         this._initDataBase();
+
+        if (runFixtures) {
+            this._runFixtures();
+        }
+
         this._initMiddleWares();
         this._initRouter();
         this._initSockets();
@@ -50,12 +56,16 @@ export default class RpgApp {
         mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
     }
 
+    private _runFixtures(): void {
+        require('./fixtures/destinations').destinations();
+    }
+
     private _initMiddleWares(): void {
         this.app.use(flash());
         this.app.use(express.static(path.join(__dirname, '../dist/rpg')));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
-        this.app.use(sessionMiddleware);
+        this.app.use(sessionMiddleWare);
         this.app.use(passport.initialize());
         this.app.use(passport.session());
     }
@@ -70,7 +80,7 @@ export default class RpgApp {
         this.socket = require('socket.io')(this.server);
 
         this.socket.use((socket: any, next) => {
-            sessionMiddleware(socket.request, {}, next);
+            sessionMiddleWare(socket.request, {}, next);
         });
 
         this.socket.use((socket: any, next) => {
@@ -90,9 +100,9 @@ export default class RpgApp {
             const user = socket.request.user;
             const character: WhiteMage = new WhiteMage(user.character.id, user.character.level, user.character.name);
 
-            this.game.world[0].visitors.push(character);
+            this.game.destinations[0].visitors.push(character);
 
-            console.log(this.game.world[0].visitors[0]);
+            console.log(this.game.destinations[0].visitors[0]);
 
             this.socket.emit('game', this.game);
         });

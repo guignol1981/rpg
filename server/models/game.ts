@@ -1,25 +1,33 @@
+import DestinationModel from '../schemas/destination';
 import Character from './character';
 
-interface IVisitable {
+interface IDestination {
+    id: string;
     name: string;
     visitors: Character[];
+    isDefault: boolean;
 }
 
-class Village implements IVisitable {
+class Village implements IDestination {
     public visitors: Character[] = [];
 
     constructor(
-        public readonly name: string
+        public readonly id: string,
+        public readonly name: string,
+        public readonly isDefault: boolean = false
     ) { }
 }
 
 export default class Game {
-    public world: IVisitable[];
+    public destinations: IDestination[] = [];
 
     constructor() {
-        this.world = [
-            new Village('Selbina'),
-            new Village('Bastok')
-        ];
+        DestinationModel.find().exec((err, destinations) => {
+            destinations.forEach(destination => {
+                this.destinations.push(new Village(destination.id, destination.name, destination.isDefault));
+            });
+            console.log(this.destinations);
+        });
+
     }
 }

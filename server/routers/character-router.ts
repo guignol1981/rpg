@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import CharacterModel from '../schemas/character';
+import DestinationModel from '../schemas/destination';
 
 const authenticate = require('../passport/authenticate').default;
 const router = express.Router();
@@ -10,14 +11,18 @@ router.post('/create', authenticate, (req: Request, res: Response) => {
         name: req.body.name
     });
 
-    req.user.character = character;
+    DestinationModel.findOne({ isDefault: true }).exec((err, destination) => {
+        character.destination = destination;
 
-    req.user.save();
+        req.user.character = character;
 
-    character.save().then(() => {
-        res.send({
-            data: true,
-            msg: 'Character created'
+        req.user.save();
+
+        character.save().then(() => {
+            res.send({
+                data: true,
+                msg: 'Character created'
+            });
         });
     });
 });

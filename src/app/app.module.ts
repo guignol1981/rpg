@@ -12,6 +12,7 @@ import { CharacterViewComponent } from './character-view/character-view.componen
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CharacterCreationComponent } from './character-creation/character-creation.component';
+import { VisitableComponent } from './visitable/visitable.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { CharacterCreationComponent } from './character-creation/character-creat
         BattleLobbyComponent,
         LoginComponent,
         RegisterComponent,
-        CharacterCreationComponent
+        CharacterCreationComponent,
+        VisitableComponent
     ],
     imports: [
         BrowserModule,
