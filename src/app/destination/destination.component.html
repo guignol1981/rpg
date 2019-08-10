@@ -1,0 +1,6 @@
+<div *ngIf="destination">
+    {{destination.name}}
+    <p *ngFor="let visitor of destination.visitors">
+        {{visitor.name}}
+    </p>
+</div>

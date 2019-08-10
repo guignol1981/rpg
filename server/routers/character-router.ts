@@ -5,13 +5,15 @@ import DestinationModel from '../schemas/destination';
 const authenticate = require('../passport/authenticate').default;
 const router = express.Router();
 
-router.post('/create', authenticate, (req: Request, res: Response) => {
+router.post('/create', authenticate, async (req: Request, res: Response) => {
     const character = new CharacterModel({
         user: req.user,
         name: req.body.name
     });
 
     DestinationModel.findOne({ isDefault: true }).exec((err, destination) => {
+        if (err) { throw err; }
+
         character.destination = destination;
 
         req.user.character = character;

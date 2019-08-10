@@ -1,14 +1,14 @@
 import DestinationModel from '../schemas/destination';
 import Character from './character';
 
-interface IDestination {
+export interface IDestination {
     id: string;
     name: string;
     visitors: Character[];
     isDefault: boolean;
 }
 
-class Village implements IDestination {
+export class Village implements IDestination {
     public visitors: Character[] = [];
 
     constructor(
@@ -22,12 +22,14 @@ export default class Game {
     public destinations: IDestination[] = [];
 
     constructor() {
+        this._initDestinations();
+    }
+
+    private _initDestinations(): void {
         DestinationModel.find().exec((err, destinations) => {
             destinations.forEach(destination => {
                 this.destinations.push(new Village(destination.id, destination.name, destination.isDefault));
             });
-            console.log(this.destinations);
         });
-
     }
 }

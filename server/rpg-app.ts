@@ -8,6 +8,7 @@ import WhiteMage from './models/characters/white-mage';
 import Game from './models/game';
 import characterRouter from './routers/character-router';
 import userRouter from './routers/user-router';
+import CharacterModel from './schemas/character';
 import UserModel from './schemas/user';
 import bodyParser = require('body-parser');
 import express = require('express');
@@ -96,15 +97,15 @@ export default class RpgApp {
         });
 
         this.socket.on('connection', (socket) => {
-            console.log('a user connected');
             const user = socket.request.user;
             const character: WhiteMage = new WhiteMage(user.character.id, user.character.level, user.character.name);
 
-            this.game.destinations[0].visitors.push(character);
+            CharacterModel.findOne({ _id: character.id }).exec((err, characterDoc) => {
+                const destination = this.game.destinations.find(d => d.id == characterDoc.destination);
+                destination.visitors.push(character);
 
-            console.log(this.game.destinations[0].visitors[0]);
-
-            this.socket.emit('game', this.game);
+                this.socket.emit('destination', destination);
+            });
         });
     }
 

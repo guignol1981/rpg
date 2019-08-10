@@ -8,11 +8,11 @@ import { AppComponent } from './app.component';
 import { BattleLobbyComponent } from './battle-lobby/battle-lobby.component';
 import { BattleComponent } from './battle/battle.component';
 import { CharacterControllerComponent } from './character-controller/character-controller.component';
+import { CharacterCreationComponent } from './character-creation/character-creation.component';
 import { CharacterViewComponent } from './character-view/character-view.component';
+import { DestinationComponent } from './destination/destination.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { CharacterCreationComponent } from './character-creation/character-creation.component';
-import { VisitableComponent } from './visitable/visitable.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +24,7 @@ import { VisitableComponent } from './visitable/visitable.component';
         LoginComponent,
         RegisterComponent,
         CharacterCreationComponent,
-        VisitableComponent
+        DestinationComponent
     ],
     imports: [
         BrowserModule,
