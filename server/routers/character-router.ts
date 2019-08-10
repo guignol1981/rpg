@@ -1,13 +1,22 @@
 import express from 'express';
-const authenticate = require('../passport/authenticate').default;
+import CharacterModel from '../schemas/character';
 
+const authenticate = require('../passport/authenticate').default;
 const router = express.Router();
 
 router.post('/create', authenticate, (req, res) => {
-    res.send({
-        data: true,
-        msg: 'route work'
+    const character = new CharacterModel({
+        user: req.user,
+        name: req.body.name
     });
+
+    character.save().then(() => {
+        res.send({
+            data: true,
+            msg: 'Character created'
+        });
+    });
+
 });
 
 export default router;

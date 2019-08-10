@@ -1,1 +1,17 @@
-<p>character-creation works!</p>
+<div class="container bg-light p-2">
+    <form [formGroup]="formGroup">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input formControlName="name"
+                   type="name"
+                   class="form-control"
+                   id="name"
+                   aria-describedby="nameHelp"
+                   placeholder="Enter character name">
+        </div>
+
+        <button (click)="create()"
+                type="submit"
+                [class]="formGroup.valid ? 'btn btn-primary' : 'btn btn-disabled'">Create</button>
+    </form>
+</div>

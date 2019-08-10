@@ -4,6 +4,7 @@ import http from 'http';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import path from 'path';
+import { Socket } from 'socket.io';
 import BattleLobby from './models/battle-lobby';
 import WhiteMage from './models/characters/white-mage';
 import characterRouter from './routers/character-router';
@@ -16,7 +17,7 @@ const MongoStore = require('connect-mongo')(expressSession);
 export default class RpgApp {
     private app = express();
     private server: any;
-    private io: any;
+    private socket: SocketIO.Socket;
     private battleLobby: BattleLobby = new BattleLobby();
 
     constructor(
@@ -64,16 +65,16 @@ export default class RpgApp {
     }
 
     private _initSockets(): void {
-        this.io = require('socket.io')(this.server);
+        this.socket = require('socket.io')(this.server);
 
-        this.io.on('connection', (socket) => {
+        this.socket.on('connection', (socket: Socket) => {
             console.log('a user connected');
 
             const character: WhiteMage = new WhiteMage(1, 1, 'test');
 
             this.battleLobby.characters.push(character);
 
-            this.io.emit('battle-lobby', this.battleLobby);
+            this.socket.emit('battle-lobby', this.battleLobby);
 
             console.log('there is ' + this.battleLobby.characters.length + ' in the battle lobby');
         });

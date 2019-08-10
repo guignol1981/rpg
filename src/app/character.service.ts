@@ -8,7 +8,7 @@ export class CharacterService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public create(): Promise<boolean> {
-        return this.httpClient.post('api/characters/create', {}).toPromise().then(() => true);
+    public create(data: any): Promise<boolean> {
+        return this.httpClient.post('api/characters/create', data).toPromise().then(() => true);
     }
 }
