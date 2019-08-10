@@ -4,7 +4,6 @@ import http from 'http';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import path from 'path';
-import { Socket } from 'socket.io';
 import BattleLobby from './models/battle-lobby';
 import WhiteMage from './models/characters/white-mage';
 import characterRouter from './routers/character-router';
@@ -12,6 +11,7 @@ import userRouter from './routers/user-router';
 import bodyParser = require('body-parser');
 import express = require('express');
 import expressSession = require('express-session');
+
 const MongoStore = require('connect-mongo')(expressSession);
 
 export default class RpgApp {
@@ -61,13 +61,13 @@ export default class RpgApp {
     private _initRouter(): void {
         this.app.use('/api/users', userRouter);
         this.app.use('/api/characters', characterRouter);
-        this.app.get('*', (req: any, res: any) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
+        this.app.get('*', (req: express.Request, res: express.Response) => res.sendFile(path.join(__dirname, '../dist/rpg/index.html')));
     }
 
     private _initSockets(): void {
         this.socket = require('socket.io')(this.server);
 
-        this.socket.on('connection', (socket: Socket) => {
+        this.socket.on('connection', (socket) => {
             console.log('a user connected');
 
             const character: WhiteMage = new WhiteMage(1, 1, 'test');

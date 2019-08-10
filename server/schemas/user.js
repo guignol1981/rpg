@@ -5,16 +5,17 @@ const crypto = require('crypto');
 mongoose.set('useCreateIndex', true);
 
 const userSchema = new Schema({
-    username: { type: String, required: true },
+    username: { type: Schema.Types.String, required: true },
     email: {
-        type: String,
+        type: Schema.Types.String,
         required: true,
         trim: true,
         unique: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
-    hash: { type: String },
-    salt: { type: String }
+    hash: { type: Schema.Types.String },
+    salt: { type: Schema.Types.String },
+    character: { type: Schema.Types.ObjectId, ref: 'Character' }
 });
 
 userSchema.methods.setPassword = function (password) {

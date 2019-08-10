@@ -19,7 +19,7 @@
         </div>
         <button (click)="login()"
                 type="submit"
-                class="btn btn-primary">Login</button>
+                [class]="formGroup.valid ? 'btn btn-primary' : 'btn btn-disabled'">Login</button>
 
         <a routerLink="/register"
            class="btn btn-secondary ml-1">Register</a>

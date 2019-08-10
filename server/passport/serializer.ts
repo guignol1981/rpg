@@ -6,7 +6,7 @@ passport.serializeUser((user: any, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    UserModel.findById(id, (err, user) => {
+    UserModel.findById(id).populate('character').exec((err, user) => {
         done(err, user);
     });
 });

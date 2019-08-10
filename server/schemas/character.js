@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 mongoose.set('useCreateIndex', true);
 
 const characterSchema = new Schema({
-    user: { type: 'ObjectId', ref: 'User', required: true },
-    name: { type: String, required: true },
-    level: { type: Number, default: 1 }
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    name: { type: Schema.Types.String, required: true },
+    level: { type: Schema.Types.Number, default: 1 }
 });
 
 module.exports = mongoose.model('Character', characterSchema);

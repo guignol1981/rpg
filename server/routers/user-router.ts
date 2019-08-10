@@ -23,6 +23,8 @@ router.post('/logout', (req: Request, res: Response) => {
 
 router.post('/username-avaibility', (req: Request, res: Response) => {
     UserModel.find({ username: req.body.username }).exec((err, docs) => {
+        if (err) { throw err; }
+
         res.send({
             data: !docs.length,
             msg: !!docs.length ? 'username not available' : 'username available'
@@ -32,6 +34,8 @@ router.post('/username-avaibility', (req: Request, res: Response) => {
 
 router.post('/email-avaibility', (req: Request, res: Response) => {
     UserModel.find({ email: req.body.email }).exec((err, docs) => {
+        if (err) { throw err; }
+
         res.send({
             data: !docs.length,
             msg: !!docs.length ? 'email not available' : 'email available'
@@ -41,11 +45,13 @@ router.post('/email-avaibility', (req: Request, res: Response) => {
 
 router.post('/register', (req: Request, res: Response) => {
     const registerData: any = req.body;
-    const userModel = new UserModel(registerData);
+    const user = new UserModel(registerData);
 
-    userModel.setPassword(registerData.password);
+    user.setPassword(registerData.password);
 
-    userModel.save().then((user) => {
+    user.save((err) => {
+        if (err) { throw err; }
+
         req.login(user, () => {
             res.send({
                 data: true,

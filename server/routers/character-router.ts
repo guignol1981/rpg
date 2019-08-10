@@ -1,14 +1,18 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import CharacterModel from '../schemas/character';
 
 const authenticate = require('../passport/authenticate').default;
 const router = express.Router();
 
-router.post('/create', authenticate, (req, res) => {
+router.post('/create', authenticate, (req: Request, res: Response) => {
     const character = new CharacterModel({
         user: req.user,
         name: req.body.name
     });
+
+    req.user.character = character;
+
+    req.user.save();
 
     character.save().then(() => {
         res.send({
@@ -16,7 +20,6 @@ router.post('/create', authenticate, (req, res) => {
             msg: 'Character created'
         });
     });
-
 });
 
 export default router;

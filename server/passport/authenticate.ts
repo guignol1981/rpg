@@ -4,7 +4,7 @@ export default function authenticate(req: Request, res: Response, next: () => vo
     if (req.isAuthenticated()) {
         next();
     } else {
-        res.send({
+        res.status(401).send({
             data: false,
             msg: 'Unauthorized'
         });
