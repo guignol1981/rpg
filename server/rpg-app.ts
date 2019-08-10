@@ -11,10 +11,10 @@ import userRouter from './routers/user-router';
 import bodyParser = require('body-parser');
 import express = require('express');
 import expressSession = require('express-session');
+const MongoStore = require('connect-mongo')(expressSession);
 
 export default class RpgApp {
     private app = express();
-    private router = express.Router();
     private server: any;
     private io: any;
     private battleLobby: BattleLobby = new BattleLobby();
@@ -50,7 +50,8 @@ export default class RpgApp {
         this.app.use(expressSession({
             secret: process.env.SESSION_SECRET,
             resave: false,
-            saveUninitialized: true
+            saveUninitialized: true,
+            store: new MongoStore({ mongooseConnection: mongoose.connection })
         }));
         this.app.use(passport.initialize());
         this.app.use(passport.session());
