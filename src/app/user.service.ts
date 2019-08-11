@@ -16,10 +16,10 @@ export class UserService {
     }
 
     usernameAvaibility(username: string): Promise<boolean> {
-        return this.httpClient.post('api/users/username-avaibility', { username }).toPromise().then((res: any) => res.data);
+        return this.httpClient.post('api/users/username-avaibility', { username }).toPromise().then((response: any) => response.data);
     }
 
     emailAvaibility(email: string): Promise<boolean> {
-        return this.httpClient.post('api/users/email-avaibility', { email }).toPromise().then((res: any) => res.data);
+        return this.httpClient.post('api/users/email-avaibility', { email }).toPromise().then((response: any) => response.data);
     }
 }

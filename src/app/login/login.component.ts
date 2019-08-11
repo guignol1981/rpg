@@ -21,7 +21,15 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    login(): void {
+    public get emailControl(): FormControl {
+        return this.formGroup.get('email') as FormControl;
+    }
+
+    public get passwordControl(): FormControl {
+        return this.formGroup.get('password') as FormControl;
+    }
+
+    public login(): void {
         if (!this.formGroup.valid) {
             return;
         }

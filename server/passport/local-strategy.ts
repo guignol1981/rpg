@@ -12,11 +12,11 @@ passport.use(new LocalStrategy(
             if (err) { return done(err); }
 
             if (!user) {
-                return done(null, false, { message: 'Incorrect email.' });
+                return done(null, false, { msg: 'Incorrect email.' });
             }
 
             if (!user.validPassword(password)) {
-                return done(null, false, { message: 'Incorrect password.' });
+                return done(null, false, { msg: 'Incorrect password.' });
             }
 
             return done(null, user);
