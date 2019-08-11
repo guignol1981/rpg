@@ -4,11 +4,9 @@ import http from 'http';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import path from 'path';
-import WhiteMage from './models/characters/white-mage';
 import Game from './models/game';
 import characterRouter from './routers/character-router';
 import userRouter from './routers/user-router';
-import CharacterModel from './schemas/character';
 import UserModel from './schemas/user';
 import bodyParser = require('body-parser');
 import express = require('express');
@@ -26,39 +24,41 @@ export default class RpgApp {
     private app = express();
     private server: any;
     private socket: SocketIO.Socket;
-    private game: Game = new Game();
+    private game: Game;
 
     constructor(
-        public readonly port: number,
-        runFixtures = false
+        public readonly port: number
     ) {
         this.server = http.createServer(this.app);
 
         this._setEnv();
+        this._initPassport();
         this._initDataBase();
-
-        if (runFixtures) {
-            this._runFixtures();
-        }
-
         this._initMiddleWares();
         this._initRouter();
         this._initSockets();
+        this._startGame();
         this._startServer();
     }
 
+    public static runFixtures(): void {
+        require('./fixtures/destinations').destinations();
+    }
+
     private _setEnv(): void {
-        if (process.env.NODE_ENV !== 'production') {
-            dotenv.config();
+        if (process.env.NODE_ENV === 'production') {
+            return;
         }
+        dotenv.config();
+    }
+
+    private _initPassport(): void {
+        require('./passport/serializer');
+        require('./passport/local-strategy');
     }
 
     private _initDataBase(): void {
         mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-    }
-
-    private _runFixtures(): void {
-        require('./fixtures/destinations').destinations();
     }
 
     private _initMiddleWares(): void {
@@ -95,18 +95,10 @@ export default class RpgApp {
                     next();
                 });
         });
+    }
 
-        this.socket.on('connection', (socket) => {
-            const user = socket.request.user;
-            const character: WhiteMage = new WhiteMage(user.character.id, user.character.level, user.character.name);
-
-            CharacterModel.findOne({ _id: character.id }).exec((err, characterDoc) => {
-                const destination = this.game.destinations.find(d => d.id == characterDoc.destination);
-                destination.visitors.push(character);
-
-                this.socket.emit('destination', destination);
-            });
-        });
+    private _startGame(): void {
+        this.game = new Game(this.socket);
     }
 
     private _startServer(): void {
