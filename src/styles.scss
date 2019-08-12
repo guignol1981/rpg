@@ -1,3 +1,14 @@
+
+@font-face {
+    font-family: 'test-test';
+    src: url('assets/fonts/ancient-modern.woff') format('woff');
+    font-weight: 300;
+}
+
+$font-family-base: 'test-test', Roboto, sans-serif;
+
+@import '~bootstrap/scss/bootstrap';
+
 .flipX {
     transform: scaleX(-1);
 }
