@@ -26,4 +26,12 @@ export default class WhiteMage extends Character {
             return 'assets/WhiteMage-Walk.gif';
         }
     }
+
+    public static Deserialize(data: any): WhiteMage {
+        return new this(
+            data['id'],
+            data['level'],
+            data['name']
+        );
+    }
 }

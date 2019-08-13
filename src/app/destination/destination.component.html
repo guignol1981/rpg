@@ -1,6 +1,113 @@
-<div *ngIf="destination">
-    {{destination.name}}
-    <p *ngFor="let visitor of destination.visitors">
-        {{visitor.name}}
-    </p>
+<div *ngIf="destination"
+     class="container p-5">
+    <div class="main">
+        <div class="d-flex justify-content-between">
+            <div class="h1">
+                City: {{destination.name}}
+            </div>
+            <div class="h3">
+                32 unique visitors
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <div class="h2">
+                    Visitors
+                </div>
+                <ul>
+                    <li *ngFor="let visitor of destination.visitors">
+                        {{visitor.name}}
+                        <img src="assets/Fighter-Front.gif"
+                             alt="">
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="h2">
+                    Shops
+                </div>
+                <ul>
+                    <li class="w-100 mt-1">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Armors
+                            </div>
+                            <button>Buy</button>
+                        </div>
+                    </li>
+                    <li class="w-100 mt-1">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Weapons
+                            </div>
+                            <button>Buy</button>
+                        </div>
+                    </li>
+                    <li class="w-100 mt-1">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Magics
+                            </div>
+                            <button>Buy</button>
+                        </div>
+                    </li>
+                    <li class="w-100 mt-1">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Items
+                            </div>
+                            <button>Buy</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="h2">
+                    Party
+                </div>
+                <ul>
+                    <li>
+                        Destination: Bastok, 4 members, ready &nbsp; <button>join</button>
+                    </li>
+                    <li>
+                        Destination: Bastok, 4 members, ready &nbsp; <button>join</button>
+                    </li>
+                    <li>
+                        Destination: Bastok, 4 members, ready &nbsp; <button>join</button>
+                    </li>
+                    <li>
+                        Destination: Bastok, 4 members, ready &nbsp; <button>join</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="h2">
+            Chat
+        </div>
+        <div class="border chat-logs">
+            <ul>
+                <li>
+                    Kabo - test!
+                </li>
+                <li>
+                    Spaz - ok!
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+        <div class="d-flex justify-content-between">
+            <input class="w-100"
+                   type="text"
+                   name=""
+                   id="">
+            <button>send</button>
+        </div>
+    </div>
 </div>
