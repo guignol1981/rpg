@@ -34,6 +34,7 @@ export default class Game {
     private _initDestinations(): void {
         DestinationModel.find().exec((err, destinations) => {
             if (err) { throw err; }
+
             destinations.forEach(destination => {
                 this.destinations.push(new Village(destination.id, destination.name, destination.isDefault));
             });
