@@ -19,9 +19,16 @@ export class CharacterCreationComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.formGroup = new FormGroup({
-            name: new FormControl('', [Validators.required, Validators.minLength(3)])
+        this.characterService.characterCheck().then((asCharacter) => {
+            if (asCharacter) {
+                this.router.navigateByUrl('destination');
+            } else {
+                this.formGroup = new FormGroup({
+                    name: new FormControl('', [Validators.required, Validators.minLength(3)])
+                });
+            }
         });
+
     }
 
     create(): void {

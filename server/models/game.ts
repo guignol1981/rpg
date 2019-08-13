@@ -47,13 +47,17 @@ export default class Game {
             CharacterModel.findOne({ _id: character.id }).exec((err, characterDoc) => {
                 if (err) { throw err; }
 
-                const destination = this.destinations.find(d => characterDoc.destination == d.id);
-                destination.visitors.push(character);
+                const destination = this.destinations.find(d => characterDoc.destination.equals(d.id));
+
+                if (!destination.visitors.find(v => character.id === v.id)) {
+                    destination.visitors.push(character);
+                }
 
                 this.socket.emit('destination', destination);
 
                 clientSocket.on('disconnect', () => {
-                    destination.visitors = destination.visitors.filter(v => v.id != character.id);
+                    destination.visitors = destination.visitors.filter(v => v.id !== character.id);
+
                     this.socket.emit('destination', destination);
                 });
             });

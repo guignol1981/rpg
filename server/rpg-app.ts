@@ -27,13 +27,20 @@ export default class RpgApp {
     private game: Game;
 
     constructor(
-        public readonly port: number
+        public readonly port: number,
+        runFixtures: boolean = false
     ) {
         this.server = http.createServer(this.app);
 
         this._setEnv();
         this._initPassport();
         this._initDataBase();
+
+        if (runFixtures) {
+            this._runFixtures();
+            return;
+        }
+
         this._initMiddleWares();
         this._initRouter();
         this._initSockets();
@@ -41,7 +48,7 @@ export default class RpgApp {
         this._startServer();
     }
 
-    public static runFixtures(): void {
+    private _runFixtures(): void {
         require('./fixtures/destinations').destinations();
     }
 

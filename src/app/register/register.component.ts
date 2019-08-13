@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MustMatch } from 'src/validators/must-match';
 import { UserService } from '../user.service';
 
@@ -10,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class RegisterComponent implements OnInit {
     private formGroup: FormGroup;
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService, private router: Router) { }
 
     ngOnInit() {
         this.formGroup = new FormGroup({
@@ -42,7 +43,11 @@ export class RegisterComponent implements OnInit {
             return;
         }
 
-        this.userService.register(this.formGroup.value);
+        this.userService.register(this.formGroup.value).then((success) => {
+            if (success) {
+                this.router.navigateByUrl('character-creation');
+            }
+        });
     }
 
     private _usernameAvailbility(control: AbstractControl) {

@@ -29,4 +29,11 @@ router.post('/create', authenticate, async (req: Request, res: Response) => {
     });
 });
 
+router.get('/character-check', authenticate, (req: Request, res: Response) => {
+    res.send({
+        data: !!req.user.character,
+        msg: !!req.user.character ? 'has character' : 'no character set yet'
+    });
+});
+
 export default router;
