@@ -13,6 +13,7 @@ import { CharacterViewComponent } from './character-view/character-view.componen
 import { DestinationComponent } from './destination/destination.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { EquipmentComponent } from './equipment/equipment.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { RegisterComponent } from './register/register.component';
         LoginComponent,
         RegisterComponent,
         CharacterCreationComponent,
-        DestinationComponent
+        DestinationComponent,
+        EquipmentComponent
     ],
     imports: [
         BrowserModule,
